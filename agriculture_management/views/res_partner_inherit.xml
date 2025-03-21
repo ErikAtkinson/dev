@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="res_partner_form_view" model="ir.ui.view">
+            <field name="name">res.partner.form.view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='function']" position="before">
+                    <field name="is_farmer"/>
+                    <field name="is_agronomist"/>
+                    <field name="is_field_manager"/>
+                </xpath>
+                <xpath expr="//field[@name='vat']" position="before">
+                    <field name="farmer_region_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                </xpath>
+                <xpath expr="//notebook/page[3]" position="after">
+                    <page string="Farm Details" invisible="1">
+                        <field name="farm_ids"/>
+                    </page>
+                </xpath>
+                <div name="button_box" position="inside">
+                    <button class="oe_stat_button" type="object" name="view_agriculture_farm"
+                            icon="fa-location-arrow">
+                        <field string="Farms" name="farm_count" widget="statinfo"/>
+                    </button>
+                </div>
+            </field>
+        </record>
+        <record id="res_partner_search_view" model="ir.ui.view">
+            <field name="name">res.partner.search.view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='group_country']" position="after">
+                    <separator/>
+                    <filter string="Region" name="region" domain="[]" context="{'group_by':'farmer_region_id'}"/>
+                    <separator/>
+                </xpath>
+            </field>
+        </record>
+        <record id="action_res_partner_farmer" model="ir.actions.act_window">
+            <field name="name">Farmers</field>
+            <field name="res_model">res.partner</field>
+            <field name="domain">[('is_farmer', '=', True)]</field>
+            <field name="context">{'default_is_farmer': True}</field>
+            <field name="view_mode">kanban,tree,form,search</field>
+        </record>
+        <record id="action_res_partner_agronomist" model="ir.actions.act_window">
+            <field name="name">Agronomists</field>
+            <field name="res_model">res.partner</field>
+            <field name="domain">[('is_agronomist', '=', True)]</field>
+            <field name="context">{'default_is_agronomist': True}</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+        <record id="action_res_partner_field_manager" model="ir.actions.act_window">
+            <field name="name">Field Managers</field>
+            <field name="res_model">res.partner</field>
+            <field name="domain">[('is_field_manager', '=', True)]</field>
+            <field name="context">{'default_is_field_manager': True}</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+    </data>
+</odoo>

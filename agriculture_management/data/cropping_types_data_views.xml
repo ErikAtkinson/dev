@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="cropping_type_1" model="cropping.type">
+            <field name="title">Crop Rotation</field>
+            <field name="description">Crops Are Changed from Year to Year</field>
+        </record>
+        <record id="cropping_type_2" model="cropping.type">
+            <field name="title">Inter Cropping</field>
+            <field name="description">Growing Two or More Crops Simultaneously on the Same Piece of Land</field>
+        </record>
+        <record id="cropping_type_3" model="cropping.type">
+            <field name="title">Relay Cropping</field>
+            <field name="description">Planting Another Before Harvesting a Crops</field>
+        </record>
+        <record id="cropping_type_4" model="cropping.type">
+            <field name="title">Mono Cropping</field>
+            <field name="description">Only One Crop on a Piece of land</field>
+        </record>
+        <record id="cropping_type_5" model="cropping.type">
+            <field name="title">Multiple Cropping</field>
+            <field name="description">Multiple Cropping Involves the Growing of Crops on the Same Field</field>
+        </record>
+        <record id="cropping_type_6" model="cropping.type">
+            <field name="title">Sequence Cropping</field>
+            <field name="description">One Crop Grown After Another</field>
+        </record>
+        <record id="cropping_type_7" model="cropping.type">
+            <field name="title">Ratoon Cropping</field>
+            <field name="description">Crop Re-grown From Roots After Harvest</field>
+        </record>
+        <record id="cropping_type_8" model="cropping.type">
+            <field name="title">Mixed Cropping</field>
+            <field name="description">Two or More Crops on the Same Land Without a Definite Fixed Ratio</field>
+        </record>
+    </data>
+</odoo>

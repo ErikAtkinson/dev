@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="water_indicator_form_view" model="ir.ui.view">
+            <field name="name">water.analysis.indicator.form.view</field>
+            <field name="model">water.analysis.indicator</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="water_indicator_id"/>
+                            <h1>
+                                <field name="water_indicator_id" placeholder="e.g. Selenium..."/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="unit"/>
+                                <field name="test_remarks"/>
+                            </group>
+                            <group>
+                                <field name="requirements"/>
+                                <field name="methods"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="water_analysis_indicator_tree_view" model="ir.ui.view">
+            <field name="name">water.analysis.indicator.tree.view</field>
+            <field name="model">water.analysis.indicator</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="water_indicator_id"/>
+                    <field name="unit"/>
+                    <field name="test_remarks"/>
+                    <field name="requirements"/>
+                    <field name="methods"/>
+                </tree>
+            </field>
+        </record>
+        <record id="water_analysis_indicator_kanban_view" model="ir.ui.view">
+            <field name="name">water.analysis.indicator.kanban.view</field>
+            <field name="model">water.analysis.indicator</field>
+            <field name="arch" type="xml">
+                <kanban string="Kanban">
+                    <field name="water_indicator_id"/>
+                    <field name="unit"/>
+                    <field name="test_remarks"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                                <div class="oe_kanban_details">
+                                    <strong>Water Indicator:</strong>
+                                    <field name="water_indicator_id"/>
+                                    <br/>
+                                    Unit:
+                                    <field name="unit"/>
+                                    <br/>
+                                    Requirements:
+                                    <field name="requirements"/>
+                                    <br/>
+                                    Test remarks:
+                                    <field name="test_remarks"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="water_analysis_indicator_search_view" model="ir.ui.view">
+            <field name="name">water.analysis.indicator.search.view</field>
+            <field name="model">water.analysis.indicator</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="water_indicator_id"/>
+                    <group string="Group By">
+                        <filter name="water_indicator_id" string="Water Indicator"
+                                context="{'group_by': 'water_indicator_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_analysis_water_indicator" model="ir.actions.act_window">
+            <field name="name">Water Analysis Indicators</field>
+            <field name="res_model">water.analysis.indicator</field>
+            <field name="view_mode">kanban,tree,form,search</field>
+        </record>
+    </data>
+</odoo>

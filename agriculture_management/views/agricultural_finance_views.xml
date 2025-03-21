@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="agricultural_finance_form_view" model="ir.ui.view">
+            <field name="name">agricultural.finance.form.view</field>
+            <field name="model">agricultural.finance</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button string="Excel Report" name="print_excel_report" type="object"
+                                class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="agriculture_financial_year_id"/>
+                            <h1>
+                                <field name="agriculture_financial_year_id" placeholder="e.g. 2017-18...." required="1"
+                                       options="{'no_create':True,'no_create_edit':True}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Information">
+                                <field name="farmer_id" required="1"
+                                       options="{'no_create':True,'no_create_edit':True}"/>
+                                <field name="farm_id" domain="[('farmer_id', '=', farmer_id)]" required="1"
+                                       options="{'no_create':True,'no_create_edit':True}"/>
+                                <field name="season_id" required="1" options="{'no_create':True,'no_create_edit':True}"
+                                       domain="[('farm_id', '=', farm_id), ('financial_year_id', '=', agriculture_financial_year_id)]"/>
+                            </group>
+                            <group string="Cost estimate">
+                                <field name="income"/>
+                                <field name="expense"/>
+                                <field name="profit_loss"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="agricultural_finance_tree_view" model="ir.ui.view">
+            <field name="name">agricultural.finance.tree.view</field>
+            <field name="model">agricultural.finance</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="agriculture_financial_year_id"/>
+                    <field name="season_id"/>
+                    <field name="farm_id"/>
+                    <field name="farmer_id"/>
+                    <field name="income" sum="Total Income"/>
+                    <field name="expense" sum="Total Expense"/>
+                    <field name="profit_loss" sum="Profit &amp; Loss"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="agricultural_finance_search_view" model="ir.ui.view">
+            <field name="name">agricultural.finance.search.view</field>
+            <field name="model">agricultural.finance</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="agriculture_financial_year_id"/>
+                    <field name="season_id"/>
+                    <field name="farm_id"/>
+                    <group string="Group By">
+                        <filter name="agriculture_financial_year" string="Agriculture Financial Year"
+                                context="{'group_by': 'agriculture_financial_year_id'}"/>
+                        <filter name="season" string="Season"
+                                context="{'group_by':'season_id'}"/>
+                        <filter name="farm_id" string="Farm"
+                                context="{'group_by':'farm_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_agricultural_finance" model="ir.actions.act_window">
+            <field name="name">Agricultural Finances</field>
+            <field name="res_model">agricultural.finance</field>
+            <field name="view_mode">tree,form,activity,search</field>
+        </record>
+    </data>
+</odoo>

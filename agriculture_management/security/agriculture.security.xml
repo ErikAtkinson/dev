@@ -1,0 +1,32 @@
+<odoo>
+    <data noupdate="1">
+
+        <!-- Define a custom module category -->
+        <record id="module_category_agriculture" model="ir.module.category">
+            <field name="name">Agriculture</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- Define Agriculture User group -->
+        <record id="group_agriculture_user" model="res.groups">
+            <field name="name">Agriculture User</field>
+            <field name="category_id" ref="module_category_agriculture"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!-- Define Agriculture Manager group -->
+        <record id="group_agriculture_manager" model="res.groups">
+            <field name="name">Agriculture Manager</field>
+            <field name="category_id" ref="module_category_agriculture"/>
+            <field name="implied_ids" eval="[(4, ref('agriculture_management.group_agriculture_user'))]"/>
+        </record>
+
+        <!-- Define Agriculture Administrator group -->
+        <record id="group_agriculture_admin" model="res.groups">
+            <field name="name">Agriculture Administrator</field>
+            <field name="category_id" ref="module_category_agriculture"/>
+            <field name="implied_ids" eval="[(4, ref('agriculture_management.group_agriculture_manager'))]"/>
+        </record>
+
+    </data>
+</odoo>

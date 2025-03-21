@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="farm_equipment_uses_form_view" model="ir.ui.view">
+            <field name="name">farm.equipment.uses.form.view</field>
+            <field name="model">farm.equipment.uses</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="equipment_id"/>
+                            <h1>
+                                <field name="equipment_id" placeholder="e.g. Equipment.."
+                                       attrs="{'readonly': [('bill_id', '!=', False)]}"
+                                       options="{'no_create':True,'no_create_edit':True}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Crop Details">
+                                <field name="farm_season_id" readonly="1"/>
+                                <field name="crop_id" attrs="{'readonly': [('bill_id', '!=', False)]}" required="1"
+                                       options="{'no_create':True,'no_create_edit':True}"/>
+                                <field name="crop_ids" invisible="1"/>
+                            </group>
+                            <group string="Equipment Use Cost">
+                                <field name="rent_hours" attrs="{'readonly': [('bill_id', '!=', False)]}"/>
+                                <field name="rent_price" attrs="{'readonly': [('bill_id', '!=', False)]}"/>
+                                <field name="total"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+
+                                <label for="bill_id" string="Vendor Bill"/>
+                                <div class="address_format">
+                                    <field name="bill_id" style="width: auto;"
+                                           attrs="{'invisible': [('bill_id', '=', False)]}" readonly="1"/>
+                                    <field name="equipment_bill_status" widget="badge"
+                                           decoration-danger="equipment_bill_status == 'pending'"
+                                           decoration-success="equipment_bill_status == 'bill_created'"
+                                           style="margin-left: 15px; width: auto;"/>
+                                </div>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="farm_equipment_uses_tree_view" model="ir.ui.view">
+            <field name="name">farm.equipment.uses.tree.view</field>
+            <field name="model">farm.equipment.uses</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="equipment_id"/>
+                    <field name="farm_season_id"/>
+                    <field name="crop_id"/>
+                    <field name="crop_ids" invisible="1"/>
+                    <field name="rent_price" sum="Price"/>
+                    <field name="rent_hours" sum="Total Rent"/>
+                    <field name="total" sum="Total"/>
+                    <field name="bill_id" widget="many2one_button"/>
+                    <field name="equipment_bill_status" widget="badge"
+                           decoration-danger="equipment_bill_status == 'pending'"
+                           decoration-success="equipment_bill_status == 'bill_created'"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="farm_equipment_uses_kanban_view" model="ir.ui.view">
+            <field name="name">farm.equipment.uses.kanban.view</field>
+            <field name="model">farm.equipment.uses</field>
+            <field name="arch" type="xml">
+                <kanban string="Kanban" class="o_res_partner_kanban">
+                    <field name="id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click"
+                                 style="height: auto; background-color: #6CC1ED,color:#006600">
+                                <ul style="list-style-type:none;">
+                                    <li>
+                                        <strong>Name:</strong>
+                                        <field name="equipment_id"/>
+                                    </li>
+                                    <li>
+                                        <strong>Rent Hours:</strong>
+                                        <field name="rent_hours"/>
+                                    </li>
+                                    <li>
+                                        <strong>Rent Price:</strong>
+                                        <field name="rent_price"/>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="farm_equipment_uses_search_view" model="ir.ui.view">
+            <field name="name">farm.equipment.uses.search.view</field>
+            <field name="model">farm.equipment.uses</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="equipment_id"/>
+                    <field name="crop_id"/>
+                    <group string="Group By">
+                        <filter name="crop_id" string="Crops"
+                                context="{'group_by': 'crop_id'}"/>
+                        <filter name="bill_id" string="Vendor Bills"
+                                context="{'group_by': 'bill_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_farm_equipment_uses" model="ir.actions.act_window">
+            <field name="name">Equipments Uses</field>
+            <field name="res_model">farm.equipment.uses</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <record id="ir_actions_farm_equipment_bill" model="ir.actions.server">
+            <field name="name">Create Bills</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_farm_equipment_uses"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action = records.action_farm_equipment_bill()
+            </field>
+            <field name="binding_model_id" ref="agriculture_management.model_farm_equipment_uses"/>
+            <field name="binding_view_types">list</field>
+        </record>
+
+    </data>
+</odoo>

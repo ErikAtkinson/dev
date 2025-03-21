@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="crop_incident_form_view" model="ir.ui.view">
+            <field name="name">crop.incident.form.view</field>
+            <field name="model">crop.incident</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="avatar" widget="image" class="oe_avatar" nolabel="1"/>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="e.g. Incident Type"/>
+                            </h1>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="crop_incident_kanban_view" model="ir.ui.view">
+            <field name="name">crop.incident.types.kanban.view</field>
+            <field name="model">crop.incident</field>
+            <field name="arch" type="xml">
+                <kanban string="Kanban" class="o_res_partner_kanban">
+                    <field name="id"/>
+                    <field name="avatar"/>
+                    <field name="name"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                                <t t-if="record.avatar.raw_value">
+                                    <div class="o_kanban_image_fill_left d-none d-md-block"
+                                         t-attf-style="background-image: url(#{kanban_image('crop.incident', 'avatar',record.id.raw_value)}})">
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="o_kanban_image_fill_left d-none d-md-block"
+                                         t-attf-style="background-image: url('/agriculture_management/static/src/img/farm_type.png')">
+                                    </div>
+                                </t>
+                                <div class="oe_kanban_details">
+                                    <strong>
+                                        <field name="name"/>
+                                    </strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="crop_incident_tree_view" model="ir.ui.view">
+            <field name="name">crop.incident.tree.view</field>
+            <field name="model">crop.incident</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_crop_incident" model="ir.actions.act_window">
+            <field name="name">Crop Incident Types</field>
+            <field name="res_model">crop.incident</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+    </data>
+</odoo>

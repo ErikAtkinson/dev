@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="weather_type_1" model="weather.type">
+            <field name="title">Clear Sky</field>
+        </record>
+        <record id="weather_type_2" model="weather.type">
+            <field name="title">Cloudy</field>
+        </record>
+        <record id="weather_type_3" model="weather.type">
+            <field name="title">Partly Cloudy</field>
+        </record>
+        <record id="weather_type_4" model="weather.type">
+            <field name="title">Rain</field>
+        </record>
+        <record id="weather_type_5" model="weather.type">
+            <field name="title">Drizzle</field>
+        </record>
+        <record id="weather_type_6" model="weather.type">
+            <field name="title">Thunderstorm</field>
+        </record>
+        <record id="weather_type_7" model="weather.type">
+            <field name="title">Snow</field>
+        </record>
+        <record id="weather_type_8" model="weather.type">
+            <field name="title">Sleet</field>
+        </record>
+        <record id="weather_type_9" model="weather.type">
+            <field name="title">Hail</field>
+        </record>
+        <record id="weather_type_10" model="weather.type">
+            <field name="title">Fog</field>
+        </record>
+        <record id="weather_type_11" model="weather.type">
+            <field name="title">Wind</field>
+        </record>
+        <record id="weather_type_12" model="weather.type">
+            <field name="title">Tornado</field>
+        </record>
+        <record id="weather_type_13" model="weather.type">
+            <field name="title">Hurricane/Typhoon/Cyclone</field>
+        </record>
+        <record id="weather_type_14" model="weather.type">
+            <field name="title">Blizzard</field>
+        </record>
+        <record id="weather_type_15" model="weather.type">
+            <field name="title">Dust Storm</field>
+        </record>
+        <record id="weather_type_16" model="weather.type">
+            <field name="title">Mist</field>
+        </record>
+    </data>
+</odoo>

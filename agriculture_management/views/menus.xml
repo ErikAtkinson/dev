@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <!--Agriculture Main menu-->
+        <menuitem id="main_menu_agriculture_management" name="Agriculture"
+                  web_icon="agriculture_management,static/description/icon.png"/>
+
+        <!--Dashboard Main menu-->
+        <menuitem id="menu_agriculture"
+                  name="Dashboard"
+                  parent="main_menu_agriculture_management"
+                  action="action_agriculture_dashboard"
+                  sequence="0"/>
+
+        <!--Land/Farm Management -->
+        <menuitem id="menu_land_farm_management" name="Lands/Farms" parent="main_menu_agriculture_management"
+                  sequence="1"/>
+        <menuitem id="menu_agriculture_farm"
+                  name="Lands/Farms"
+                  parent="menu_land_farm_management"
+                  action="action_agriculture_farm"
+                  sequence="1"/>
+        <menuitem id="menu_agriculture_farmer"
+                  name="Farmers"
+                  parent="menu_land_farm_management"
+                  action="action_res_partner_farmer"
+                  sequence="2"/>
+        <menuitem id="menu_agr_farming_seasons"
+                  name="Farming Seasons"
+                  parent="menu_land_farm_management"
+                  action="action_agriculture_season"
+                  sequence="3"/>
+        <menuitem id="menu_field_visits"
+                  name="Field Visits"
+                  parent="menu_land_farm_management"
+                  action="action_field_visit"
+                  sequence="4"/>
+
+        <!--Crop Management menu-->
+        <menuitem id="menu_crop_management" name="Crops" parent="main_menu_agriculture_management" sequence="2"/>
+        <menuitem id="menu_agriculture_crops"
+                  name="Crops"
+                  parent="menu_crop_management"
+                  action="action_agriculture_crop"
+                  sequence="1"/>
+        <menuitem id="menu_agr_crop_disease"
+                  name="Crop Diseases"
+                  parent="menu_crop_management"
+                  action="action_crop_disease"
+                  sequence="2"/>
+        <menuitem id="menu_crop_healthy_manure"
+                  name="Crop Healthy Manure"
+                  parent="menu_crop_management"
+                  action="action_crop_healthy_manure"
+                  sequence="3"/>
+        <menuitem id="menu_cropping_type"
+                  name="Cropping Types"
+                  parent="menu_crop_management"
+                  action="action_cropping_type"
+                  sequence="4"/>
+        <menuitem id="menu__crop_fertiliser"
+                  name="Fertilisers"
+                  parent="menu_crop_management"
+                  action="action_crop_fertiliser"
+                  sequence="5"/>
+        <menuitem id="menu_farm_Pesticides_Herbs"
+                  name="Pesticides/Herbs"
+                  parent="menu_crop_management"
+                  action="action_crop_pesticides"
+                  sequence="6"/>
+        <menuitem id="menu_crop_seed"
+                  name="Seeds"
+                  parent="menu_crop_management"
+                  action="action_crop_seed"
+                  sequence="7"/>
+
+        <!--Crop disaster-->
+        <menuitem id="menu_crop_incident" name="Crop Incidents" parent="main_menu_agriculture_management" sequence="3"/>
+        <menuitem id="menu_crop_incident_type"
+                  name="Incident Types"
+                  parent="menu_crop_incident"
+                  action="action_crop_incident"
+                  sequence="1"/>
+        <menuitem id="menu_crop_incident_details"
+                  name="Incidents"
+                  parent="menu_crop_incident"
+                  action="action_season_crop_incident"
+                  sequence="2"/>
+
+        <!--Resource Management menu-->
+        <menuitem id="menu_resource_management" name="Resources" parent="main_menu_agriculture_management"
+                  sequence="4"/>
+        <menuitem id="menu_agriculture_agronomist"
+                  name="Agronomists"
+                  parent="menu_resource_management"
+                  action="action_res_partner_agronomist"
+                  sequence="1"/>
+        <menuitem id="menu_res_partner_field_manager"
+                  name="Field Managers"
+                  parent="menu_resource_management"
+                  action="action_res_partner_field_manager"
+                  sequence="2"/>
+        <menuitem id="menu_agriculture_fleet"
+                  name="Agriculture Fleets"
+                  parent="menu_resource_management"
+                  action="action_agriculture_fleet"
+                  sequence="3"/>
+        <menuitem id="menu_agriculture_equipments"
+                  name="Equipments"
+                  parent="menu_resource_management"
+                  action="action_agriculture_equipment"
+                  sequence="4"/>
+        <menuitem id="menu_hr_form"
+                  name="Employees"
+                  parent="menu_resource_management"
+                  action="hr.open_view_employee_list_my"
+                  sequence="5"/>
+        <menuitem id="menu_farm_animal"
+                  name="Farm Animals"
+                  parent="menu_resource_management"
+                  action="action_farm_animal"
+                  sequence="6"/>
+        <menuitem id="menu_worker"
+                  name="Workers"
+                  parent="menu_resource_management"
+                  action="action_farm_worker"
+                  sequence="7"/>
+
+        <!--Productions menu-->
+        <menuitem id="menu_production_management" name="Productions" parent="main_menu_agriculture_management"
+                  sequence="5"/>
+        <menuitem id="menu_agriculture_warehouse"
+                  name="Agriculture WareHouses"
+                  parent="menu_production_management"
+                  action="action_stock_warehouse"
+                  sequence="1"/>
+        <menuitem id="menu_production"
+                  name="Stocks"
+                  parent="menu_production_management"
+                  action="action_crop_production"
+                  sequence="2"/>
+
+        <!--Financial Management menu-->
+        <menuitem id="menu_agricultural_finance" name="Financial History" parent="main_menu_agriculture_management"
+                  sequence="6"/>
+        <menuitem id="menu_season_budgets"
+                  name="Budgets"
+                  parent="menu_agricultural_finance"
+                  action="action_season_budget"
+                  sequence="1"/>
+        <menuitem id="menu_season_product_income"
+                  name="Production Incomes"
+                  parent="menu_agricultural_finance"
+                  action="action_agricultural_finance"
+                  sequence="2"/>
+
+        <!-- Analysis Reports-->
+        <menuitem id="main_menu_agriculture_analysis"
+                  name="Analysis Reports"
+                  parent="main_menu_agriculture_management"
+                  sequence="7"/>
+        <menuitem id="menu_budget_vs_actual_spend_report"
+                  name="Budget Vs Actual Spent Report"
+                  parent="main_menu_agriculture_analysis"
+                  action="action_budget_vs_actual_spend_report"
+                  sequence="1"/>
+        <menuitem id="menu_soil_analysis"
+                  name="Soil Analysis"
+                  parent="main_menu_agriculture_analysis"
+                  action="action_soil_analysis"
+                  sequence="2"/>
+        <menuitem id="menu_season_report_wizard"
+                  name="Season Report"
+                  parent="main_menu_agriculture_analysis"
+                  action="action_season_report"
+                  sequence="3"/>
+        <menuitem id="menu_weather_record"
+                  name="Weather Records"
+                  parent="main_menu_agriculture_analysis"
+                  action="action_weather_record"
+                  sequence="4"/>
+        <menuitem id="menu_water_analysis"
+                  name="Water Analysis"
+                  parent="main_menu_agriculture_analysis"
+                  action="action_water_analysis"
+                  sequence="5"/>
+
+        <!--Configuration menu-->
+        <menuitem id="menu_agr_configuration" name="Configurations" parent="main_menu_agriculture_management"
+                  sequence="8"/>
+
+        <!--Another Config menu-->
+        <menuitem id="menu_agr_financial_year"
+                  name="Financial Years"
+                  parent="menu_agr_configuration"
+                  action="action_agriculture_financial_year"
+                  sequence="1"/>
+        <menuitem id="menu_product_uom"
+                  name="Units of Measure"
+                  parent="menu_agr_configuration"
+                  action="uom.product_uom_categ_form_action"
+                  sequence="2"/>
+        <menuitem id="menu_agriculture_task"
+                  name="Agriculture Tasks"
+                  parent="menu_agr_configuration"
+                  action="action_agriculture_task"
+                  sequence="3"/>
+
+        <!--Farm Config menu-->
+        <menuitem id="menu_farm_config" name="Farm" parent="menu_agr_configuration" sequence="4"/>
+        <menuitem id="menu_farm_types"
+                  name="Farm Types"
+                  parent="menu_farm_config"
+                  action="action_farm_types"
+                  sequence="1"/>
+
+        <menuitem id="menu_equip_config" name="Equipment" parent="menu_agr_configuration" sequence="5"/>
+        <menuitem id="menu_equipment_tags"
+                  name="Equipment Tags"
+                  parent="menu_equip_config"
+                  action="action_equipment_tags"
+                  sequence="1"/>
+
+        <!--Analysis Report Config menu-->
+        <menuitem id="menu_analysis_report_config" name="Analysis Report" parent="menu_agr_configuration" sequence="6"/>
+        <menuitem id="menu_soil_indicators"
+                  name="Soil Indicators"
+                  parent="menu_analysis_report_config"
+                  action="action_soil_indicator"
+                  sequence="1"/>
+        <menuitem id="menu_water_indicators"
+                  name="Water Indicators"
+                  parent="menu_analysis_report_config"
+                  action="action_water_indicator"
+                  sequence="2"/>
+
+        <!--Weather menu-->
+        <menuitem id="menu_weather" name="Weather" parent="menu_agr_configuration" sequence="7"/>
+        <menuitem id="menu_daily_weather"
+                  name="Daily Weather"
+                  parent="menu_weather"
+                  action="action_daily_weather"
+                  sequence="1"/>
+        <menuitem id="menu_weather_type"
+                  name="Weather Type"
+                  parent="menu_weather"
+                  action="action_weather_type"
+                  sequence="2"/>
+
+        <!--Farmer Regions-->
+        <menuitem id="menu_farmer_region" name="Farmer Region" parent="menu_agr_configuration" sequence="8"/>
+        <menuitem id="menu_farmer_regions"
+                  name="Regions"
+                  parent="menu_farmer_region"
+                  action="action_farmer_region"
+                  sequence="1"/>
+
+        <!--Task Template-->
+        <menuitem id="menu_template_details" name="Template Details" parent="menu_agr_configuration" sequence="9"/>
+        <menuitem id="menu_task_template"
+                  name="Templates"
+                  parent="menu_template_details"
+                  action="action_task_template"
+                  sequence="1"/>
+    </data>
+</odoo>

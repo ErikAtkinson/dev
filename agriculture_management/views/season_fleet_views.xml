@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="season_fleet_form_view" model="ir.ui.view">
+            <field name="name">season.fleet.form.view</field>
+            <field name="model">season.fleet</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="fleet_id"/>
+                            <h1>
+                                <field name="fleet_id" placeholder="e.g. Fleet.."
+                                       attrs="{'readonly': [('bill_id', '!=', False)]}"
+                                       options="{'no_create':True,'no_create_edit':True}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Used Date">
+                                <field name="farm_season_id" readonly="1"/>
+                                <field name="crop_id" attrs="{'readonly': [('bill_id', '!=', False)]}" required="1"
+                                       options="{'no_create':True,'no_create_edit':True}"/>
+                                <field name="crop_ids" invisible="1"/>
+                                <field name="date_of_used" attrs="{'readonly': [('bill_id', '!=', False)]}"/>
+                            </group>
+                            <group string="Quick Estimation Cost">
+                                <label for="fuel" class="mt-1" string="Fuel"/>
+                                <div name="fuel">
+                                    <field name="fuel" class="oe_inline"
+                                           attrs="{'readonly': [('bill_id', '!=', False)]}"/>
+                                    <strong>&#160;Liter</strong>
+                                </div>
+                                <label for="price" class="mt-1" string="Liter / Price"/>
+                                <div name="price">
+                                    <field name="price" class="oe_inline"
+                                           attrs="{'readonly': [('bill_id', '!=', False)]}"/>
+                                    <strong>&#160;&#160;Total Price&#160;&#160;&#160;</strong>
+                                    <field name="total_price" class="oe_inline"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </div>
+
+                                <label for="bill_id" string="Vendor Bill"/>
+                                <div class="address_format">
+                                    <field name="bill_id" style="width: auto;"
+                                           attrs="{'invisible': [('bill_id', '=', False)]}" readonly="1"/>
+                                    <field name="fleet_bill_status" widget="badge"
+                                           decoration-danger="fleet_bill_status == 'pending'"
+                                           decoration-success="fleet_bill_status == 'bill_created'"
+                                           style="margin-left: 15px; width: auto;"/>
+                                </div>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="season_fleet_tree_view" model="ir.ui.view">
+            <field name="name">season.fleet.tree.view</field>
+            <field name="model">season.fleet</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="fleet_id"/>
+                    <field name="farm_season_id"/>
+                    <field name="crop_id"/>
+                    <field name="crop_ids" invisible="1"/>
+                    <field name="date_of_used"/>
+                    <field name="fuel" sum="Fuel Used"/>
+                    <field name="price" sum="Price"/>
+                    <field name="total_price" sum="Total"/>
+                    <field name="bill_id" widget="many2one_button"/>
+                    <field name="fleet_bill_status" widget="badge"
+                           decoration-danger="fleet_bill_status == 'pending'"
+                           decoration-success="fleet_bill_status == 'bill_created'"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="season_fleet_search_view" model="ir.ui.view">
+            <field name="name">season.fleet.search.view</field>
+            <field name="model">season.fleet</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="fleet_id"/>
+                    <field name="crop_id"/>
+                    <field name="crop_id"/>
+                    <group string="Group By">
+                        <filter name="crop_id" string="Crops"
+                                context="{'group_by': 'crop_id'}"/>
+                        <filter name="bill_id" string="Vendor Bills"
+                                context="{'group_by': 'bill_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_season_fleet" model="ir.actions.act_window">
+            <field name="name">Season Fleets</field>
+            <field name="res_model">season.fleet</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="ir_actions_season_fleet_bill" model="ir.actions.server">
+            <field name="name">Create Bills</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_season_fleet"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action = records.action_season_fleet_bill()
+            </field>
+            <field name="binding_model_id" ref="agriculture_management.model_season_fleet"/>
+            <field name="binding_view_types">list</field>
+        </record>
+    </data>
+</odoo>

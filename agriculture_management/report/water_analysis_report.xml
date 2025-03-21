@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="water_analysis_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="water">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td colspan="3"
+                                        style="text-align: center; background-color: #f5f5f5; padding: 2px; font-size: 25px;">
+                                        <strong>
+                                            Water Analysis Report
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">Sample ID:
+                                        <span t-field="water.sample"/>
+                                    </td>
+                                    <td style="padding: 2px;">Analysis Date:
+                                        <span t-field="water.analysis_date"/>
+                                    </td>
+                                    <td style="padding: 2px;">Water Use:
+                                        <span t-field="water.water_use"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">Farm:
+                                        <span t-field="water.farm_id"/>
+                                    </td>
+                                    <td style="padding: 2px;">Report Date:
+                                        <span t-field="water.report_date"/>
+                                    </td>
+                                    <td style="padding: 2px;">Water Source:
+                                        <span t-field="water.water_source"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">Farmer:
+                                        <span t-field="water.farmer_id"/>
+                                    </td>
+                                    <td colspan="2" style="padding: 2px;">Crops:
+                                        <span t-field="water.crop_ids"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table class="table table-bordered" style="margin-top: 0px;">
+                                <tr>
+                                    <td style="padding: 2px;">
+                                        <strong>Water Indicator</strong>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Unit</strong>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Test Remarks</strong>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Requirements</strong>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Methods</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5"
+                                        style="text-align: center; background-color: #f5f5f5; padding: 2px;">
+                                        <strong>
+                                            Physical
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr t-foreach="water.physical_ids" t-as="phy">
+                                    <td style="padding: 2px;">
+                                        <span t-field="phy.water_indicator_id"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="phy.unit"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="phy.test_remarks"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="phy.requirements"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="phy.methods"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5"
+                                        style="text-align: center; background-color: #f5f5f5; padding: 2px;">
+                                        <strong>
+                                            Chemical
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr t-foreach="water.chemical_ids" t-as="che">
+                                    <td style="padding: 2px;">
+                                        <span t-field="che.water_indicator_id"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="che.unit"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="che.test_remarks"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="che.requirements"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="che.methods"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5"
+                                        style="text-align: center; background-color: #f5f5f5; padding: 2px;">
+                                        <strong>
+                                            Bacteriological
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr t-foreach="water.bacteriological_ids" t-as="bact">
+                                    <td style="padding: 2px;">
+                                        <span t-field="bact.water_indicator_id"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="bact.unit"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="bact.test_remarks"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="bact.requirements"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="bact.methods"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+    <record id="report_action_water_analysis_report" model="ir.actions.report">
+        <field name="name">Water Analysis Report</field>
+        <field name="model">water.analysis</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">agriculture_management.water_analysis_report_template</field>
+        <field name="report_file">agriculture_management.water_analysis_report_template</field>
+        <field name="binding_model_id" ref="model_water_analysis"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

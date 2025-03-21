@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="physical_1" model="water.indicator">
+            <field name="parameter">Turbidity of Water</field>
+            <field name="type">physical</field>
+        </record>
+        <record id="physical_2" model="water.indicator">
+            <field name="parameter">Colour</field>
+            <field name="type">physical</field>
+        </record>
+        <record id="physical_3" model="water.indicator">
+            <field name="parameter">Taste and Odour</field>
+            <field name="type">physical</field>
+        </record>
+        <record id="physical_4" model="water.indicator">
+            <field name="parameter">Temperature of Water</field>
+            <field name="type">physical</field>
+        </record>
+        <record id="physical_5" model="water.indicator">
+            <field name="parameter">Specific Conductivity</field>
+            <field name="type">physical</field>
+        </record>
+        <record id="chemical_1" model="water.indicator">
+            <field name="parameter">Total Solids and Suspended Solids</field>
+            <field name="type">chemical</field>
+        </record>
+        <record id="chemical_2" model="water.indicator">
+            <field name="parameter">pH value of Water</field>
+            <field name="type">chemical</field>
+        </record>
+        <record id="chemical_3" model="water.indicator">
+            <field name="parameter">Hardness of Water</field>
+            <field name="type">chemical</field>
+        </record>
+        <record id="chemical_4" model="water.indicator">
+            <field name="parameter">Chloride Content</field>
+            <field name="type">chemical</field>
+        </record>
+        <record id="chemical_5" model="water.indicator">
+            <field name="parameter">Nitrogen Content</field>
+            <field name="type">chemical</field>
+        </record>
+        <record id="bacteriological_1" model="water.indicator">
+            <field name="parameter">Bacteria</field>
+            <field name="type">bacteriological</field>
+        </record>
+        <record id="bacteriological_2" model="water.indicator">
+            <field name="parameter">Protozoa</field>
+            <field name="type">bacteriological</field>
+        </record>
+        <record id="bacteriological_3" model="water.indicator">
+            <field name="parameter">Viruses</field>
+            <field name="type">bacteriological</field>
+        </record>
+        <record id="bacteriological_4" model="water.indicator">
+            <field name="parameter">Worms</field>
+            <field name="type">bacteriological</field>
+        </record>
+        <record id="bacteriological_5" model="water.indicator">
+            <field name="parameter">Fungi</field>
+            <field name="type">bacteriological</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="farm_labour_form_view" model="ir.ui.view">
+            <field name="name">farm.labour.form.view</field>
+            <field name="model">farm.labour</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="worker_id"/>
+                            <h1>
+                                <field name="worker_id" placeholder="e.g. Worker.."
+                                       attrs="{'readonly': [('bill_id', '!=', False)]}"
+                                       options="{'no_create':True,'no_create_edit':True}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Work Details">
+                                <field name="labour_work_type" attrs="{'readonly': [('bill_id', '!=', False)]}"/>
+                                <field name="farm_season_id" readonly="1"/>
+                                <field name="crop_id" attrs="{'readonly': [('bill_id', '!=', False)]}" required="1"
+                                       options="{'no_create':True,'no_create_edit':True}"/>
+                                <field name="crop_ids" invisible="1"/>
+                                <field name="work_date" attrs="{'readonly': [('bill_id', '!=', False)]}"/>
+                                <field name="labour_type" widget="radio" options="{'horizontal': True}"
+                                       attrs="{'readonly': [('bill_id', '!=', False)]}"/>
+                            </group>
+                            <group string="Cost Estimate">
+                                <field name="total_hour"
+                                       attrs="{'invisible':[('labour_type', '=', 'day/price')], 'readonly': [('bill_id', '!=', False)]}"/>
+                                <field name="rate_hour"
+                                       attrs="{'invisible':[('labour_type', '=', 'day/price')], 'readonly': [('bill_id', '!=', False)]}"/>
+                                <field name="total_labour_cost" force_save="1"
+                                       attrs="{'readonly': ['|', ('bill_id', '!=', False), ('labour_type', '!=', 'day/price')]}"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+
+                                <label for="bill_id" string="Vendor Bill"/>
+                                <div class="address_format">
+                                    <field name="bill_id" style="width: auto;"
+                                           attrs="{'readonly': [('bill_id', '=', False)]}" readonly="1"/>
+                                    <field name="labour_bill_status" widget="badge"
+                                           decoration-danger="labour_bill_status == 'pending'"
+                                           decoration-success="labour_bill_status == 'bill_created'"
+                                           style="margin-left: 15px; width: auto;"/>
+                                </div>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="farm_labour_tree_view" model="ir.ui.view">
+            <field name="name">farm.labour.tree.view</field>
+            <field name="model">farm.labour</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="worker_id"/>
+                    <field name="farm_season_id"/>
+                    <field name="crop_id"/>
+                    <field name="labour_work_type"/>
+                    <field name="work_date"/>
+                    <field name="labour_type"/>
+                    <field name="total_hour" sum="Hours"/>
+                    <field name="rate_hour" sum="Rate Hours"/>
+                    <field name="total_labour_cost" sum="Total Labour Cost"/>
+                    <field name="bill_id" widget="many2one_button"/>
+                    <field name="labour_bill_status" widget="badge"
+                           decoration-danger="labour_bill_status == 'pending'"
+                           decoration-success="labour_bill_status == 'bill_created'"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="farm_labour_kanban_view" model="ir.ui.view">
+            <field name="name">farm.labour.kanban.view</field>
+            <field name="model">farm.labour</field>
+            <field name="arch" type="xml">
+                <kanban string="Kanban" class="o_res_partner_kanban">
+                    <field name="id"/>
+                    <field name="worker_id"/>
+                    <field name="crop_id"/>
+                    <field name="labour_work_type"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click"
+                                 style="height: auto; background-color:#6CC1ED,color:#006600">
+                                <ul style="list-style-type:none;">
+                                    <li>
+                                        <strong>Name:</strong>
+                                        <field name="worker_id"/>
+                                    </li>
+                                    <li>
+                                        <strong>Work Type:</strong>
+                                        <field name="labour_work_type"/>
+                                    </li>
+                                    <li>
+                                        <strong>Work Date:</strong>
+                                        <field name="work_date"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="farm_labour_search_view" model="ir.ui.view">
+            <field name="name">farm.labour.search.view</field>
+            <field name="model">farm.labour</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="worker_id"/>
+                    <group string="Group By">
+                        <filter name="labour_type" string="Labour Types"
+                                context="{'group_by': 'labour_type'}"/>
+                        <filter name="labour_work_type" string="Work Types"
+                                context="{'group_by': 'labour_work_type'}"/>
+                        <filter name="crop_id" string="Crops"
+                                context="{'group_by': 'crop_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_farm_labour" model="ir.actions.act_window">
+            <field name="name">Farm Labours</field>
+            <field name="res_model">farm.labour</field>
+            <field name="view_mode">kanban,tree,form,search</field>
+        </record>
+
+        <record id="ir_actions_farm_labour_bill" model="ir.actions.server">
+            <field name="name">Create Bills</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_farm_labour"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action = records.action_farm_labour_bill()
+            </field>
+            <field name="binding_model_id" ref="agriculture_management.model_farm_labour"/>
+            <field name="binding_view_types">list</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="agriculture_management.agriculture_management_dashboard" owl="1">
+        <section class="section agriculture_dashboard">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mt32">
+                        <h4 class="tk-primary">All Static</h4>
+                        <hr class="border-primary"/>
+                    </div>
+                    <div class="col-md-2 mb-4 mt8 mb16" t-on-click="() => this.viewAgricultureFarms()">
+                        <div class="card purple-bg p-32">
+                            <div class="card-body purple-bg tk-card-body">
+                                <img alt="users" width="40"
+                                     src="agriculture_management/static/src/img/dashboard/1-farm.svg"/>
+                                <h4 class="tk-st-1">Agriculture Lands/Farms</h4>
+                                <h6 class="tk-st-2">
+                                     <t t-esc="state.agricultureFarms['agriculture_farms']"/>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-4 mt8 mb16" t-on-click="() => this.viewAgricultureFarmers()">
+                        <div class="card warn-bg p-32">
+                            <div class="card-body warn-bg tk-card-body">
+                                <img alt="users" width="40"
+                                     src="agriculture_management/static/src/img/dashboard/2-farmer.svg"/>
+                                <h4 class="tk-st-1">Agriculture Farmers</h4>
+                                <h6 class="tk-st-2">
+                                    <t t-esc="state.agricultureFarmers['agriculture_farmer']"/>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-4 mt8 mb16" t-on-click="() => this.viewAgricultureSeasons()">
+                        <div class="card info-bg p-32">
+                            <div class="card-body info-bg tk-card-body">
+                                <img alt="users" width="40"
+                                     src="agriculture_management/static/src/img/dashboard/3-season.svg"/>
+                                <h4 class="tk-st-1">Farming Seasons</h4>
+                                <h6 class="tk-st-2">
+                                    <t t-esc="state.agricultureSeasons['agriculture_season']"/>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-4 mt8 mb16" t-on-click="() => this.viewAgricultureCrops()">
+                        <div class="card danger-bg p-32">
+                            <div class="card-body danger-bg tk-card-body">
+                                <img alt="users" width="40"
+                                     src="agriculture_management/static/src/img/dashboard/4-crop.svg"/>
+                                <h4 class="tk-st-1">Agriculture Crops</h4>
+                                <h6 class="tk-st-2">
+                                    <t t-esc="state.agricultureCrops['agriculture_crop']"/>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-4 mt8 mb16" t-on-click="() => this.viewAgricultureCropProduction()">
+                        <div class="card success-bg p-32">
+                            <div class="card-body success-bg tk-card-body">
+                                <img alt="users" width="40"
+                                     src="agriculture_management/static/src/img/dashboard/5-row.svg"/>
+                                <h4 class="tk-st-1">Raw Stock Values</h4>
+                                <h6 class="tk-st-3">
+                                    <t t-esc="state.agricultureCropProduction['agriculture_crop_production']"/>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-4 mt8 mb16" t-on-click="() => this.viewSeasonCropIncidents()">
+                        <div class="card purple-bg p-32">
+                            <div class="card-body purple-bg tk-card-body">
+                                <img alt="users" width="40"
+                                     src="agriculture_management/static/src/img/dashboard/6-incident.svg"/>
+                                <h4 class="tk-st-1">Crop Incidents</h4>
+                                <h6 class="tk-st-2">
+                                    <t t-esc="state.seasonCropIncidents['season_crop_incident']"/>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 mt32">
+                        <h4 class="tk-primary">Agriculture Resources</h4>
+                        <hr class="border-primary"/>
+                    </div>
+                    <div class="col-md-2 mb-4 mt8 mb16" t-on-click="() => this.viewAgricultureAgronomists()">
+                        <div class="card warn-bg p-32">
+                            <div class="card-body warn-bg tk-card-body">
+                                <img alt="users" width="40"
+                                     src="agriculture_management/static/src/img/dashboard/7-agronomist.svg"/>
+                                <h4 class="tk-st-1">Agronomists</h4>
+                                <h6 class="tk-st-2">
+                                     <t t-esc="state.agricultureResources['agronomists']"/>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-4 mt8 mb16" t-on-click="() => this.viewAgricultureFleets()">
+                        <div class="card info-bg p-32">
+                            <div class="card-body info-bg tk-card-body">
+                                <img alt="users" width="40"
+                                     src="agriculture_management/static/src/img/dashboard/8-fleet.svg"/>
+                                <h4 class="tk-st-1">Fleets</h4>
+                                <h6 class="tk-st-2">
+                                    <t t-esc="state.agricultureResources['fleets']"/>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-4 mt8 mb16" t-on-click="() => this.viewAgricultureEquipments()">
+                        <div class="card danger-bg p-32">
+                            <div class="card-body danger-bg tk-card-body">
+                                <img alt="users" width="40"
+                                     src="agriculture_management/static/src/img/dashboard/9-equipment.svg"/>
+                                <h4 class="tk-st-1">Equipments</h4>
+                                <h6 class="tk-st-2">
+                                    <t t-esc="state.agricultureResources['equipments']"/>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-4 mt8 mb16" t-on-click="() => this.viewAgricultureEmployees()">
+                        <div class="card success-bg p-32">
+                            <div class="card-body success-bg tk-card-body">
+                                <img alt="users" width="40"
+                                     src="agriculture_management/static/src/img/dashboard/10-employee.svg"/>
+                                <h4 class="tk-st-1">Employees</h4>
+                                <h6 class="tk-st-2">
+                                    <t t-esc="state.agricultureResources['employees']"/>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-4 mt8 mb16" t-on-click="() => this.viewAgricultureAnimals()">
+                        <div class="card purple-bg p-32">
+                            <div class="card-body purple-bg tk-card-body">
+                                <img alt="users" width="40"
+                                     src="agriculture_management/static/src/img/dashboard/11-animal.svg"/>
+                                <h4 class="tk-st-1">Animals</h4>
+                                <h6 class="tk-st-2">
+                                    <t t-esc="state.agricultureResources['animals']"/>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-4 mt8 mb16" t-on-click="() => this.viewAgricultureWorkers()">
+                        <div class="card warn-bg p-32">
+                            <div class="card-body warn-bg tk-card-body">
+                                <img alt="users" width="40"
+                                     src="agriculture_management/static/src/img/dashboard/12-worker.svg"/>
+                                <h4 class="tk-st-1">Workers</h4>
+                                <h6 class="tk-st-2">
+                                    <t t-esc="state.agricultureResources['workers']"/>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="row">
+                    <div class="col-md-12 mt32">
+                        <h4 class="tk-primary">Season Expense Report</h4>
+                        <hr class="border-primary"/>
+                        <div class="tk-os-chart" t-ref="season_expense_report"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4 class="tk-primary">Season Overall Info</h4>
+                        <hr class="border-primary"/>
+                        <div class="tk-os-chart" t-ref="season_overall_info"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4 class="tk-primary">Crop Incident Report</h4>
+                        <hr class="border-primary"/>
+                        <div class="tk-os-chart" t-ref="crop_incident_report"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4 class="tk-primary">Crop Season Period</h4>
+                        <hr class="border-primary"/>
+                        <div class="tk-os-chart" t-ref="crop_season_time_duration"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="tk-primary">Season Status</h4>
+                        <hr class="border-primary"/>
+                        <div class="tk-os-chart" t-ref="season_status"/>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="tk-primary">Crops Stock</h4>
+                        <hr class="border-primary"/>
+                        <div class="tk-os-chart" t-ref="crop_stock"/>
+                    </div>
+                </div>
+            </div> -->
+        </section>
+    </t>
+</templates>

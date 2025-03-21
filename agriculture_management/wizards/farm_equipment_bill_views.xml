@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="farm_equipment_bill_form_view" model="ir.ui.view">
+            <field name="name">farm.equipment.bill.form.view</field>
+            <field name="model">farm.equipment.bill</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="vendor_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="farm_equipments" string="Farm Equipments">
+                            <field name="equipment_use_ids" nolabel="1" readonly="1">
+                                <tree>
+                                    <field name="equipment_id"/>
+                                    <field name="rent_price" sum="Price"/>
+                                    <field name="rent_hours" sum="Total Rent"/>
+                                    <field name="total" sum="Total"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button string="Create Bills" name="action_farm_equipment_bill" type="object"
+                                class="oe_highlight"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_farm_equipment_bill" model="ir.actions.act_window">
+            <field name="name">Farm Equipment Bill</field>
+            <field name="res_model">farm.equipment.bill</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="farm_equipment_bill_form_view"/>
+        </record>
+    </data>
+</odoo>

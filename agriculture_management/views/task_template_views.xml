@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="task_template_form_view" model="ir.ui.view">
+            <field name="name">task.template.form.view</field>
+            <field name="model">task.template</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="template_name" placeholder="e.g. Name"/>
+                            </h1>
+                        </div>
+                        <notebook>
+                            <page name="template_details" string="Template Details">
+                                <field name="template_details_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="task_title"/>
+                                        <field name="crop_phase"/>
+                                        <field name="task_description"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="task_template_tree_view" model="ir.ui.view">
+            <field name="name">task.template.tree.view</field>
+            <field name="model">task.template</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="template_name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_task_template" model="ir.actions.act_window">
+            <field name="name">Template</field>
+            <field name="res_model">task.template</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

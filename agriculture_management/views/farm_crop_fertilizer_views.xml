@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="farm_crop_fertiliser_form_view" model="ir.ui.view">
+            <field name="name">farm.crop.fertiliser.form.view</field>
+            <field name="model">farm.crop.fertiliser</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="fertiliser_id"/>
+                            <h1>
+                                <field name="fertiliser_id" placeholder="e.g. Crop Fertiliser.."
+                                       attrs="{'readonly': ['|', ('bill_id', '!=', False), ('delivery_order_id', '!=', False)]}"
+                                       options="{'no_create':True,'no_create_edit':True}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Crop Details">
+                                <field name="farm_season_id" readonly="1"/>
+                                <field name="crop_id" options="{'no_create':True,'no_create_edit':True}" required="1"
+                                       attrs="{'readonly': ['|', ('bill_id', '!=', False), ('delivery_order_id', '!=', False)]}"/>
+                                <field name="crop_ids" invisible="1"/>
+
+                                <label for="pkg_qty" string="Package Qty"/>
+                                <div class="address_format">
+                                    <field name="pkg_qty" style="width: auto;"/>
+                                    <strong style="margin-left: 10px;">&#160;Package Size&#160;</strong>
+                                    <field name="unit" style="margin-left: 10px; width: auto;"/>
+                                </div>
+                            </group>
+                            <group string="Estimate Cost">
+                                <field name="qty"
+                                       attrs="{'readonly': ['|', ('bill_id', '!=', False), ('delivery_order_id', '!=', False)]}"/>
+                                <field name="cost"
+                                       attrs="{'readonly': ['|', ('bill_id', '!=', False), ('delivery_order_id', '!=', False)]}"/>
+                                <field name="total_fertiliser_price"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+
+                                <label for="bill_id" string="Vendor Bill"/>
+                                <div class="address_format">
+                                    <field name="bill_id" style="width: auto;"
+                                           attrs="{'invisible': [('bill_id', '=', False)]}" readonly="1"/>
+                                    <field name="bill_status" widget="badge"
+                                           decoration-danger="bill_status == 'pending'"
+                                           decoration-success="bill_status == 'bill_created'"
+                                           style="margin-left: 15px; width: auto;"/>
+                                </div>
+
+                                <label for="delivery_order_id" string="Delivery Order"
+                                       attrs="{'invisible': [('delivery_order_id', '=', False)]}"/>
+                                <div class="address_format">
+                                    <field name="delivery_order_id" style="width: auto;"
+                                           attrs="{'invisible': [('delivery_order_id', '=', False)]}" readonly="1"/>
+                                    <field name="delivery_order_state" widget="badge" optional="show"
+                                           decoration-info="delivery_order_state == 'draft'"
+                                           decoration-danger="delivery_order_state == 'cancel'"
+                                           decoration-warning="delivery_order_state in ('waiting', 'confirmed')"
+                                           decoration-success="delivery_order_state in ('assigned', 'done')"
+                                           style="margin-left: 15px; width: auto;"/>
+                                </div>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="farm_crop_fertiliser_tree_view" model="ir.ui.view">
+            <field name="name">farm.crop.fertiliser.tree.view</field>
+            <field name="model">farm.crop.fertiliser</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="farm_season_id"/>
+                    <field name="fertiliser_id"/>
+                    <field name="crop_id"/>
+                    <field name="crop_ids" invisible="1"/>
+                    <field name="qty" sum="Qty"/>
+                    <field name="unit"/>
+                    <field name="cost" sum="Cost"/>
+                    <field name="total_fertiliser_price" sum="Total Price"/>
+                    <field name="bill_id" widget="many2one_button"/>
+                    <field name="bill_status" widget="badge"
+                           decoration-danger="bill_status == 'pending'"
+                           decoration-success="bill_status == 'bill_created'"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="delivery_order_id" widget="many2one_button"/>
+                    <field name="delivery_order_state" widget="badge" optional="show"
+                           decoration-info="delivery_order_state == 'draft'"
+                           decoration-danger="delivery_order_state == 'cancel'"
+                           decoration-warning="delivery_order_state in ('waiting', 'confirmed')"
+                           decoration-success="delivery_order_state in ('assigned', 'done')"/>
+                </tree>
+            </field>
+        </record>
+        <record id="farm_crop_fertiliser_kanban_view" model="ir.ui.view">
+            <field name="name">farm.crop.fertiliser.kanban.view</field>
+            <field name="model">farm.crop.fertiliser</field>
+            <field name="arch" type="xml">
+                <kanban string="Kanban" class="o_res_partner_kanban">
+                    <field name="id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click"
+                                 style="height:auto;background-color:#6CC1ED,color:#006600">
+                                <ul style="list-style-type:none;">
+                                    <li>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </li>
+                                    <li>
+                                        <strong>Crop Name:</strong>
+                                        <field name="crop_id"/>
+                                    </li>
+                                    <li>
+                                        <strong>Farm Season:</strong>
+                                        <field name="farm_season_id"/>
+                                    </li>
+                                    <li>
+                                        <strong>Qty:</strong>
+                                        <field name="qty"/>
+                                    </li>
+                                    <li>
+                                        <strong>Pkg Size In:</strong>
+                                        <field name="unit"/>
+                                    </li>
+                                    <li>
+                                        <strong>Cost:</strong>
+                                        <field name="cost"/>
+                                    </li>
+                                    <li>
+                                        <strong>Total Price:</strong>
+                                        <field name="total_fertiliser_price"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="farm_crop_fertiliser_search_view" model="ir.ui.view">
+            <field name="name">farm.crop.fertiliser.search.view</field>
+            <field name="model">farm.crop.fertiliser</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="fertiliser_id"/>
+                    <field name="crop_id"/>
+                    <group string="Group By">
+                        <filter name="crop_id" string="Crops"
+                                context="{'group_by': 'crop_id'}"/>
+                        <filter name="bill_id" string="Vendor Bills"
+                                context="{'group_by': 'bill_id'}"/>
+                        <filter name="delivery_order_id" string="Delivery Orders"
+                                context="{'group_by': 'delivery_order_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_farm_crop_fertiliser" model="ir.actions.act_window">
+            <field name="name">Farm Fertilisers</field>
+            <field name="res_model">farm.crop.fertiliser</field>
+            <field name="view_mode">kanban,tree,form,search</field>
+        </record>
+
+        <record id="ir_actions_crop_fertiliser_bill" model="ir.actions.server">
+            <field name="name">Create Bills</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_farm_crop_fertiliser"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action = records.action_crop_fertiliser_bill()
+            </field>
+            <field name="binding_model_id" ref="agriculture_management.model_farm_crop_fertiliser"/>
+            <field name="binding_view_types">list</field>
+        </record>
+
+
+        <record id="ir_actions_crop_fertiliser_consume_order" model="ir.actions.server">
+            <field name="name">Create Consume Order</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_farm_crop_fertiliser"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action = records.action_crop_fertiliser_consume_order()
+            </field>
+            <field name="binding_model_id" ref="agriculture_management.model_farm_crop_fertiliser"/>
+            <field name="binding_view_types">list</field>
+        </record>
+    </data>
+</odoo>

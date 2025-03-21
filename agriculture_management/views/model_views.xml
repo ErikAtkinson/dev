@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <!--Product-->
+        <record id="agriculture_product_form_view" model="ir.ui.view">
+            <field name="name">agriculture.product.form.view</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='purchase_ok']" position="after">
+                    <span class="d-inline-block">
+                        <field name="is_fertiliser"/>
+                        <label for="is_fertiliser"/>
+                    </span>
+
+                    <span class="d-inline-block">
+                        <field name="is_pesticide"/>
+                        <label for="is_pesticide"/>
+                    </span>
+
+                    <span class="d-inline-block">
+                        <field name="is_seed"/>
+                        <label for="is_seed"/>
+                    </span>
+
+                    <span class="d-inline-block">
+                        <field name="is_equipment"/>
+                        <label for="is_equipment"/>
+                    </span>
+
+                    <span class="d-inline-block">
+                        <field name="is_fleet"/>
+                        <label for="is_fleet"/>
+                    </span>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Product Template-->
+        <record id="agriculture_product_template_form_view" model="ir.ui.view">
+            <field name="name">agriculture.product.template.form.view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='purchase_ok']" position="after">
+                    <span class="d-inline-block">
+                        <field name="is_fertiliser"/>
+                        <label for="is_fertiliser"/>
+                    </span>
+
+                    <span class="d-inline-block">
+                        <field name="is_pesticide"/>
+                        <label for="is_pesticide"/>
+                    </span>
+
+                    <span class="d-inline-block">
+                        <field name="is_seed"/>
+                        <label for="is_seed"/>
+                    </span>
+
+                    <span class="d-inline-block">
+                        <field name="is_equipment"/>
+                        <label for="is_equipment"/>
+                    </span>
+
+                    <span class="d-inline-block">
+                        <field name="is_fleet"/>
+                        <label for="is_fleet"/>
+                    </span>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Vendor Bill-->
+        <record id="account_move_form_view" model="ir.ui.view">
+            <field name="name">account.move.form.view</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ref']" position="after">
+                    <field name="agriculture_season_id" readonly="1" force_save="1"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="account_move_tree_view" model="ir.ui.view">
+            <field name="name">account.move.tree.view</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_invoice_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_date_due']" position="after">
+                    <field name="agriculture_season_id" readonly="1" force_save="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Season Project-->
+        <record id="project_project_form_view" model="ir.ui.view">
+            <field name="name">project.project.form.view</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="farm_season_id" attrs="{'invisible': [('farm_season_id', '=', False)]}" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Season Project Task-->
+        <record id="project_task_form_view" model="ir.ui.view">
+            <field name="name">project.task.form.view</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='stage_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <header>
+                    <field name="status" widget="statusbar"/>
+                    <button string="In progress" name="a_start_to_b_in_progress" type="object"
+                            attrs="{'invisible': [('status', 'not in', ['a_start'])]}"/>
+                    <button string="Complete" name="b_in_progress_to_c_complete" type="object"
+                            attrs="{'invisible': [('status', 'not in', ['b_in_progress'])]}"/>
+                </header>
+                <xpath expr="//field[@name='user_ids']" position="after">
+                    <field name="farm_season_id"/>
+                    <field name="farm_id"/>
+                    <field name="crop_id"/>
+                    <field name="crop_phase"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="project_task_tree_view" model="ir.ui.view">
+            <field name="name">project.task.tree.view</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_tree2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='stage_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="status" widget="badge"
+                           decoration-info="status == 'a_start'"
+                           decoration-warning="status == 'b_in_progress'"
+                           decoration-success="status == 'c_complete'"/>
+                </xpath>
+                <xpath expr="//field[@name='project_id']" position="after">
+                    <field name="crop_id"/>
+                    <field name="crop_phase"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="project_task_inherit_kanban_view" model="ir.ui.view">
+            <field name="name">project.task.inherit.kanban.view</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="project_id"/>
+                    <field name="crop_id"/>
+                    <field name="crop_phase"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="project_task_search_view" model="ir.ui.view">
+            <field name="name">project.task.search.view</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_search_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='stage']" position="before">
+                    <filter name="crop_phase" string="Crop Phases"
+                            context="{'group_by': 'crop_phase'}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

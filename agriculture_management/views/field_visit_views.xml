@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="field_visit_form_view" model="ir.ui.view">
+            <field name="name">field.visit.form.view</field>
+            <field name="model">field.visit</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="Crop Details">
+                                <field name="farm_season_id" options="{'no_create':True,'no_create_edit':True}"/>
+                                <field name="crop_ids" invisible="1"/>
+                                <field name="crop_id" options="{'no_create':True,'no_create_edit':True}"/>
+                            </group>
+                            <group string="Visiting Details">
+                                <field name="date_of_visit"/>
+                                <field name="officer_id" options="{'no_create':True,'no_create_edit':True}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Instruction Details">
+                                <field name="instruction_type" widget="radio" options="{'horizontal': true}"/>
+                            </group>
+                        </group>
+                        <hr/>
+                        <field name="crop_images_ids">
+                            <form>
+                                <sheet>
+                                    <div class="oe_title float-left">
+                                        <h1>
+                                            <field name="name" placeholder="e.g. Name"/>
+                                        </h1>
+                                    </div>
+                                    <div style="width: 40%; height: 40%;" class="float-right">
+                                        <field name="avatar" style="width: 40%; height: 40%;"
+                                               class="img-thumbnail float-right" widget="image"/>
+                                    </div>
+                                </sheet>
+                            </form>
+                            <kanban string="Kanban" class="">
+                                <field name="id"/>
+                                <field name="avatar"/>
+                                <field name="name"/>
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <div class="card oe_kanban_global_click p-0 border-0">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <strong>
+                                                        <field name="name"/>
+                                                    </strong>
+                                                </div>
+                                                <div class="col-4 text-end">
+                                                    <!-- below 100 Kb: good -->
+                                                    <t t-if="record.avatar.raw_value.length &lt; 100*1000">
+                                                        <t t-set="size_status" t-value="'text-bg-success'"/>
+                                                        <t t-set="message">Acceptable file size</t>
+                                                    </t>
+                                                    <!-- below 1000 Kb: decent -->
+                                                    <t t-elif="record.avatar.raw_value.length &lt; 1000*1000">
+                                                        <t t-set="size_status" t-value="'text-bg-warning'"/>
+                                                        <t t-set="message">Huge file size. The image
+                                                            should be optimized/reduced.
+                                                        </t>
+                                                    </t>
+                                                    <!-- above 1000 Kb: bad -->
+                                                    <t t-else="1">
+                                                        <t t-set="size_status" t-value="'text-bg-danger'"/>
+                                                        <t t-set="message">Optimization required! Reduce the
+                                                            image size or increase your compression settings.
+                                                        </t>
+                                                    </t>
+                                                    <span t-attf-class="badge #{size_status} o_product_image_size"
+                                                          t-esc="record.avatar.value" t-att-title="message"/>
+                                                </div>
+                                            </div>
+                                            <hr class="mb-1 mt-1"/>
+                                            <div class="o_squared_image">
+                                                <img class="card-img-top"
+                                                     style="height:223px;object-fit: cover;"
+                                                     t-att-src="kanban_image('crop.images', 'avatar', record.id.raw_value)"
+                                                     t-att-alt="record.name.value"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                        </field>
+                        <hr/>
+                        <h6>Current Status of Crop</h6>
+                        <field name="current_status_of_crop"/>
+                        <hr/>
+                        <h6>Instructions</h6>
+                        <field name="instructions"/>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="field_visit_tree_view" model="ir.ui.view">
+            <field name="name">field.visit.tree.view</field>
+            <field name="model">field.visit</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="crop_id"/>
+                    <field name="crop_ids" invisible="1"/>
+                    <field name="date_of_visit"/>
+                    <field name="officer_id"/>
+                    <field name="instruction_type"/>
+                </tree>
+            </field>
+        </record>
+        <record id="field_visit_search_view" model="ir.ui.view">
+            <field name="name">field.visit.search.view</field>
+            <field name="model">field.visit</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="officer_id"/>
+                    <group string="Group By">
+                        <filter name="officer_id" string="Visiting Officer"
+                                context="{'group_by': 'officer_id'}"/>
+                        <filter name="instruction_type" string="Instruction Type"
+                                context="{'group_by': 'instruction_type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_field_visit" model="ir.actions.act_window">
+            <field name="name">Field Visit</field>
+            <field name="res_model">field.visit</field>
+            <field name="view_mode">tree,form,search,activity</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="agriculture_stock_picking_form_view" model="ir.ui.view">
+            <field name="name">agriculture.stock.picking.form.view</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="agriculture_season_id" attrs="{'invisible': [('agriculture_season_id', '=', False)]}"
+                           readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

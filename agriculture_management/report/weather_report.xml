@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="weather_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="w">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <table class="table table-sm o_main_table table-borderless mt-4">
+                                <tr>
+                                    <td colspan="2" style="text-align: center; background-color: #f5f5f5; padding: 2px; font-size: 25px;">
+                                        <strong>
+                                            Weather Report
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px; width: 50%;">Farm:
+                                        <span t-field="w.agriculture_farm_id"/>
+                                    </td>
+                                    <td rowspan="4" style="padding: 2px; width: 50%;">Address:
+                                        <span t-field="w.street"/>
+                                        <br/>
+                                        <span t-field="w.street2" style="margin-left: 4rem;"/>
+                                        <br/>
+                                        <span t-field="w.city" style="margin-left: 4rem;"/>
+                                        <span t-field="w.state_id"/>
+                                        <span t-field="w.zip"/>
+                                        <br/>
+                                        <span t-field="w.country_id" style="margin-left: 4rem;"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px; width: 50%;">Number:
+                                        <span t-field="w.weather_no"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px; width: 50%;">Created Date:
+                                        <span t-field="w.created_date"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px; width: 50%;">Responsible:
+                                        <span t-field="w.responsible_id"/>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td colspan="4"
+                                        style="text-align: center; background-color: #f5f5f5; padding: 2px; width: 100%;">
+                                        <strong>
+                                            Weather Details
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px; width: 25%;">
+                                        <strong>
+                                            Temperature Details
+                                        </strong>
+                                    </td>
+                                    <td style="padding: 2px; width: 25%;">
+                                        <strong>
+                                            Humidity Details
+                                        </strong>
+                                    </td>
+                                    <td style="padding: 2px; width: 25%;">
+                                        <strong>
+                                            Wind Details
+                                        </strong>
+                                    </td>
+                                    <td style="padding: 2px; width: 25%;">
+                                        <strong>
+                                            Visibility Details
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px; width: 25%;">Min.Temp:
+                                        <span t-field="w.min_temp"/>
+                                    </td>
+                                    <td style="padding: 2px; width: 25%;">Humidity:
+                                        <span t-field="w.humidity"/>
+                                    </td>
+                                    <td style="padding: 2px; width: 25%;">Wind:
+                                        <span t-field="w.wind"/>
+                                    </td>
+                                    <td style="padding: 2px; width: 25%;">Cloud Cover:
+                                        <span t-field="w.cloud_cover"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px; width: 25%;">Max.Temp:
+                                        <span t-field="w.max_temp"/>
+                                    </td>
+                                    <td style="padding: 2px; width: 25%;">Indoor Humidity:
+                                        <span t-field="w.indoor_humidity"/>
+                                    </td>
+                                    <td style="padding: 2px; width: 25%;">Wind Gusts:
+                                        <span t-field="w.wind_gusts"/>
+                                    </td>
+                                    <td style="padding: 2px; width: 25%;">Cloud Ceiling:
+                                        <span t-field="w.cloud_ceiling"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px; width: 25%;">Max.UV Index:
+                                        <span t-field="w.max_uv_index"/>
+                                    </td>
+                                    <td style="padding: 2px; width: 25%;">Dew Point:
+                                        <span t-field="w.dew_point"/>
+                                    </td>
+                                    <td style="padding: 2px; width: 25%;">Pressure:
+                                        <span t-field="w.pressure"/>
+                                    </td>
+                                    <td style="padding: 2px; width: 25%;">Visibility:
+                                        <span t-field="w.visibility"/>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table class="table table-bordered" style="text-align: right;">
+                                <tr>
+                                    <td colspan="11" style="text-align: center; background-color: #f5f5f5; padding: 2px;">
+                                        <strong>
+                                            Daily Weather
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px; text-align: left;">
+                                        <strong>Weather</strong>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Date</strong>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Temp</strong>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Forecast</strong>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Real Feel</strong>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Wind</strong>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Rain</strong>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Snow</strong>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Ice</strong>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Humidity</strong>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Visibility</strong>
+                                    </td>
+                                </tr>
+                                <tr t-foreach="w.daily_weather_ids" t-as="daily">
+                                    <td style="padding: 2px; text-align: left;">
+                                        <span t-field="daily.weather_type_id"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="daily.date"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="daily.temperature"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="daily.forecast"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="daily.real_feel"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="daily.wind"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="daily.rain"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="daily.snow"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="daily.ice"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="daily.humidity"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <span t-field="daily.visibility"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+    <record id="action_weather_report" model="ir.actions.report">
+        <field name="name">Weather Report</field>
+        <field name="model">weather.record</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">agriculture_management.weather_report_template</field>
+        <field name="report_file">agriculture_management.weather_report_template</field>
+        <field name="binding_model_id" ref="model_weather_record"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

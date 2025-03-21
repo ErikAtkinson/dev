@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="season_budget_tree_view" model="ir.ui.view">
+            <field name="name">season.budget.tree.view</field>
+            <field name="model">season.budget</field>
+            <field name="arch" type="xml">
+                <tree create="false" edit="false">
+                    <field name="farm_season_id"/>
+                    <field name="crop_id"/>
+                    <field name="crop_ids" invisible="1"/>
+                    <field name="budget_type"/>
+                    <field name="qty"/>
+                    <field name="unit_id"/>
+                    <field name="price"/>
+                    <field name="total_price" sum="Total Price"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="season_budget_search_view" model="ir.ui.view">
+            <field name="name">season.budget.search.view</field>
+            <field name="model">season.budget</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="budget_type"/>
+                    <group string="Group By">
+                        <filter name="budget_type" string="Budget Type"
+                                context="{'group_by': 'budget_type'}"/>
+                        <filter name="farm_season_id" string="Farming Season"
+                                context="{'group_by': 'farm_season_id'}"/>
+                        <filter name="crop_id" string="Crop"
+                                context="{'group_by': 'crop_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_season_budget" model="ir.actions.act_window">
+            <field name="name">Season Budgets</field>
+            <field name="res_model">season.budget</field>
+            <field name="view_mode">tree,search</field>
+        </record>
+    </data>
+</odoo>

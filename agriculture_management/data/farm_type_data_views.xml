@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="farm_type_1" model="farm.types">
+            <field name="farm_types">Aquaculture</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/farm_types/aquaculture.png"/>
+        </record>
+        <record id="farm_type_2" model="farm.types">
+            <field name="farm_types">Apiary</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/farm_types/apiary.png"/>
+        </record>
+        <record id="farm_type_3" model="farm.types">
+            <field name="farm_types">Commercial</field>
+            <field name="avatar" type="base64"
+                   file="agriculture_management/static/src/img/farm_types/commerical.png"/>
+        </record>
+        <record id="farm_type_4" model="farm.types">
+            <field name="farm_types">Cooperative</field>
+            <field name="avatar" type="base64"
+                   file="agriculture_management/static/src/img/farm_types/cooperative.png"/>
+        </record>
+        <record id="farm_type_5" model="farm.types">
+            <field name="farm_types">Dairy</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/farm_types/dairy.png"/>
+        </record>
+        <record id="farm_type_6" model="farm.types">
+            <field name="farm_types">Dry</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/farm_types/dry.png"/>
+        </record>
+        <record id="farm_type_7" model="farm.types">
+            <field name="farm_types">Family</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/farm_types/family.png"/>
+        </record>
+        <record id="farm_type_8" model="farm.types">
+            <field name="farm_types">Flower</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/farm_types/flower.png"/>
+        </record>
+        <record id="farm_type_9" model="farm.types">
+            <field name="farm_types">Hay</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/farm_types/hay.png"/>
+        </record>
+        <record id="farm_type_10" model="farm.types">
+            <field name="farm_types">Hobby</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/farm_types/hobby.png"/>
+        </record>
+        <record id="farm_type_11" model="farm.types">
+            <field name="farm_types">Micro</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/farm_types/micro.png"/>
+        </record>
+        <record id="farm_type_12" model="farm.types">
+            <field name="farm_types">Orchard</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/farm_types/orchard.png"/>
+        </record>
+        <record id="farm_type_13" model="farm.types">
+            <field name="farm_types">Organic</field>
+            <field name="avatar" type="base64"
+                   file="agriculture_management/static/src/img/farm_types/organic.png"/>
+        </record>
+        <record id="farm_type_14" model="farm.types">
+            <field name="farm_types">Poultry</field>
+            <field name="avatar" type="base64"
+                   file="agriculture_management/static/src/img/farm_types/polutry.png"/>
+        </record>
+        <record id="farm_type_15" model="farm.types">
+            <field name="farm_types">Ranch</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/farm_types/ranch.png"/>
+        </record>
+        <record id="farm_type_16" model="farm.types">
+            <field name="farm_types">Rice</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/farm_types/raice.png"/>
+        </record>
+        <record id="farm_type_17" model="farm.types">
+            <field name="farm_types">Subsistence</field>
+            <field name="avatar" type="base64"
+                   file="agriculture_management/static/src/img/farm_types/subsistence.png"/>
+        </record>
+        <record id="farm_type_18" model="farm.types">
+            <field name="farm_types">U-pick</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/farm_types/u-pick.png"/>
+        </record>
+        <record id="farm_type_19" model="farm.types">
+            <field name="farm_types">Urban</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/farm_types/urban.png"/>
+        </record>
+        <record id="farm_type_20" model="farm.types">
+            <field name="farm_types">Vineyard</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/farm_types/vineyard.png"/>
+        </record>
+    </data>
+
+</odoo>

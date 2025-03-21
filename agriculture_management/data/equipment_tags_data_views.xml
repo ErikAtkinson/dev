@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="equipment_tag_1" model="equipment.tags">
+            <field name="color">1</field>
+            <field name="name">Tractors</field>
+        </record>
+        <record id="equipment_tag_2" model="equipment.tags">
+            <field name="color">2</field>
+            <field name="name">Harvesting Equipment</field>
+        </record>
+        <record id="equipment_tag_3" model="equipment.tags">
+            <field name="color">3</field>
+            <field name="name">Planting and Seeding Equipment</field>
+        </record>
+        <record id="equipment_tag_4" model="equipment.tags">
+            <field name="color">4</field>
+            <field name="name">Tillage Equipment</field>
+        </record>
+        <record id="equipment_tag_5" model="equipment.tags">
+            <field name="color">5</field>
+            <field name="name">Irrigation Equipment</field>
+        </record>
+        <record id="equipment_tag_6" model="equipment.tags">
+            <field name="color">6</field>
+            <field name="name">Spraying Equipment</field>
+        </record>
+        <record id="equipment_tag_7" model="equipment.tags">
+            <field name="color">7</field>
+            <field name="name">Hay and Forage Equipment</field>
+        </record>
+        <record id="equipment_tag_8" model="equipment.tags">
+            <field name="color">8</field>
+            <field name="name">Soil Preparation Equipment</field>
+        </record>
+        <record id="equipment_tag_9" model="equipment.tags">
+            <field name="color">9</field>
+            <field name="name">Transport and Handling Equipment</field>
+        </record>
+        <record id="equipment_tag_10" model="equipment.tags">
+            <field name="color">10</field>
+            <field name="name">Livestock Equipment</field>
+        </record>
+        <record id="equipment_tag_11" model="equipment.tags">
+            <field name="color">11</field>
+            <field name="name">Storage Equipment</field>
+        </record>
+        <record id="equipment_tag_12" model="equipment.tags">
+            <field name="color">12</field>
+            <field name="name">Miscellaneous Equipment</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="crop_pesticides_form_view" model="ir.ui.view">
+            <field name="name">crop.pesticides.form.view</field>
+            <field name="model">crop.pesticides</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="image_1920" widget="image" class="oe_avatar" nolabel="1"/>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="e.g. Crop pesticides.."/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="threat_level"/>
+                                <field name="product_id" attrs="{'readonly': [('id', '!=', False)]}"
+                                       required="0"/>
+                            </group>
+                            <group>
+                                <label for="pkg_qty" string="Package Qty"/>
+                                <div class="address_format">
+                                    <field name="pkg_qty" style="width: 35%"/>
+                                    <strong>&#160;&#160;Package Size&#160;&#160;</strong>
+                                    <field name="uom_id" style="width: 35%"
+                                           options="{'no_create':True,'no_create_edit':True}"/>
+                                </div>
+                                <field name="standard_price" widget='monetary'
+                                       options="{'currency_field': 'currency_id'}"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="description" string="Descriptions">
+                                <field name="description"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="crop_pesticides_tree_view" model="ir.ui.view">
+            <field name="name">crop.pesticides.tree.view</field>
+            <field name="model">crop.pesticides</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="threat_level"/>
+                    <field name="pkg_qty" sum="Qty"/>
+                    <field name="uom_id"/>
+                    <field name="standard_price" widget='monetary'
+                           options="{'currency_field': 'currency_id'}"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="crop_pesticides_kanban_view" model="ir.ui.view">
+            <field name="name">crop.pesticides.kanban.view</field>
+            <field name="model">crop.pesticides</field>
+            <field name="arch" type="xml">
+                <kanban string="Kanban">
+                    <field name="id"/>
+                    <field name="image_1920"/>
+                    <field name="threat_level"/>
+                    <field name="pkg_qty"/>
+                    <field name="uom_id"/>
+                    <field name="standard_price"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                                <t t-if="record.image_1920.raw_value">
+                                    <div class="o_kanban_image_fill_left d-none d-md-block">
+                                        <img t-att-src="kanban_image('crop.pesticides', 'image_1920', record.id.raw_value)"
+                                             t-att-alt="name" style="margin: 0px;" width="96px" height="96px"
+                                             class="img img-responsive"/>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="o_kanban_image_fill_left d-none d-md-block"
+                                         t-attf-style="background-image: url('/agriculture_management/static/src/img/pesticides.png')">
+                                    </div>
+                                </t>
+
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top mb-0">
+                                        <div class="o_kanban_record_headings">
+                                            <strong>
+                                                <field name="name"/>
+                                            </strong>
+                                        </div>
+                                        <strong>
+                                            <field name="standard_price" widget='monetary'
+                                                   options="{'currency_field': 'currency_id'}"/>
+                                            <field name="company_id" invisible="1"/>
+                                            <field name="currency_id" invisible="1"/>
+                                        </strong>
+                                    </div>
+                                    Threat Level:
+                                    <span style="color: red;">
+                                        <field name="threat_level"/>
+                                    </span>
+                                    <br/>
+                                    Pkg Qty:
+                                    <field name="pkg_qty"/>
+                                    <field name="uom_id"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="crop_pesticides_search_view" model="ir.ui.view">
+            <field name="name">crop.pesticides.search.view</field>
+            <field name="model">crop.pesticides</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <group string="Group By">
+                        <filter name="threat_level" string="Threat Level"
+                                context="{'group_by': 'threat_level'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_crop_pesticides" model="ir.actions.act_window">
+            <field name="name">Crop Pesticides/Herbs</field>
+            <field name="res_model">crop.pesticides</field>
+            <field name="view_mode">kanban,tree,form,activity,search</field>
+        </record>
+    </data>
+</odoo>

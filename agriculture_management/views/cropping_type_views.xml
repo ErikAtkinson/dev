@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="cropping_type_tree_view" model="ir.ui.view">
+            <field name="name">cropping.type.tree.view</field>
+            <field name="model">cropping.type</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="title" required="1"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_cropping_type" model="ir.actions.act_window">
+            <field name="name">Cropping Type</field>
+            <field name="res_model">cropping.type</field>
+            <field name="view_mode">tree</field>
+        </record>
+    </data>
+</odoo>

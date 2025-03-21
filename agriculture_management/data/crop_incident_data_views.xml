@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="crop_incident_1" model="crop.incident">
+            <field name="name">Falls</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/crop_incident/falls.png"/>
+        </record>
+        <record id="crop_incident_2" model="crop.incident">
+            <field name="name">High Intensity Rainfall</field>
+            <field name="avatar" type="base64"
+                   file="agriculture_management/static/src/img/crop_incident/rainfall.png"/>
+        </record>
+        <record id="crop_incident_3" model="crop.incident">
+            <field name="name">Cyclone and Wind Risk</field>
+            <field name="avatar" type="base64"
+                   file="agriculture_management/static/src/img/crop_incident/cyclone.png"/>
+        </record>
+        <record id="crop_incident_4" model="crop.incident">
+            <field name="name">Heat Wave</field>
+            <field name="avatar" type="base64"
+                   file="agriculture_management/static/src/img/crop_incident/heat-wave.png"/>
+        </record>
+        <record id="crop_incident_5" model="crop.incident">
+            <field name="name">Land Slides</field>
+            <field name="avatar" type="base64"
+                   file="agriculture_management/static/src/img/crop_incident/land-slides.png"/>
+        </record>
+        <record id="crop_incident_6" model="crop.incident">
+            <field name="name">Cold Wave and Frost</field>
+            <field name="avatar" type="base64"
+                   file="agriculture_management/static/src/img/crop_incident/cold-wave.png"/>
+        </record>
+        <record id="crop_incident_7" model="crop.incident">
+            <field name="name">Suffocation</field>
+            <field name="avatar" type="base64"
+                   file="agriculture_management/static/src/img/crop_incident/suffocation.png"/>
+        </record>
+        <record id="crop_incident_8" model="crop.incident">
+            <field name="name">Toxic Exposure</field>
+            <field name="avatar" type="base64"
+                   file="agriculture_management/static/src/img/crop_incident/toxic.png"/>
+        </record>
+        <record id="crop_incident_9" model="crop.incident">
+            <field name="name">Burns</field>
+            <field name="avatar" type="base64" file="agriculture_management/static/src/img/crop_incident/crop-burns.png"/>
+        </record>
+        <record id="crop_incident_10" model="crop.incident">
+            <field name="name">Animal Related Injuries</field>
+            <field name="avatar" type="base64"
+                   file="agriculture_management/static/src/img/crop_incident/animal-injury.png"/>
+        </record>
+    </data>
+</odoo>

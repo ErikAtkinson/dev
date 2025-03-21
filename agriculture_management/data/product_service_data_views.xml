@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="category_agriculture_labour" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Agriculture Labour</field>
+        </record>
+       <record id="labour_service_charge_per_day" model="product.product">
+            <field name="name">Labour Service Charge / Day</field>
+            <field name="detailed_type">service</field>
+            <field name="categ_id" ref="agriculture_management.category_agriculture_labour"/>
+        </record>
+        <record id="labour_service_charge_per_hour" model="product.product">
+            <field name="name">Labour Service Charge / Hour</field>
+            <field name="detailed_type">service</field>
+            <field name="categ_id" ref="agriculture_management.category_agriculture_labour"/>
+        </record>
+    </data>
+</odoo>

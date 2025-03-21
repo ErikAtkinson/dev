@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="soil_physical_1" model="soil.indicator">
+            <field name="name">Aggregate Stability (%)</field>
+            <field name="type">physical</field>
+        </record>
+        <record id="soil_physical_2" model="soil.indicator">
+            <field name="name">Surface Hardness (psi)</field>
+            <field name="type">physical</field>
+        </record>
+        <record id="soil_physical_3" model="soil.indicator">
+            <field name="name">Available Water Capacity (m/m)</field>
+            <field name="type">physical</field>
+        </record>
+        <record id="soil_physical_4" model="soil.indicator">
+            <field name="name">Subsurface Hardness (psi)</field>
+            <field name="type">physical</field>
+        </record>
+        <record id="soil_biological_1" model="soil.indicator">
+            <field name="name">Organic Matter (%)</field>
+            <field name="type">biological</field>
+        </record>
+        <record id="soil_biological_2" model="soil.indicator">
+            <field name="name">Active Carbon (ppm)</field>
+            <field name="type">biological</field>
+        </record>
+        <record id="soil_biological_3" model="soil.indicator">
+            <field name="name">Potentially Mineralizable Nitrogen (µgN / gdwsoil / week)</field>
+            <field name="type">biological</field>
+        </record>
+        <record id="soil_biological_4" model="soil.indicator">
+            <field name="name">Root Heath Rating (1-9)</field>
+            <field name="type">biological</field>
+        </record>
+        <record id="soil_chemical_1" model="soil.indicator">
+            <field name="name">PH (see chemical test report)</field>
+            <field name="type">chemical</field>
+        </record>
+        <record id="soil_chemical_2" model="soil.indicator">
+            <field name="name">Extractable Phosphorus (see chemical test report)</field>
+            <field name="type">chemical</field>
+        </record>
+        <record id="soil_chemical_3" model="soil.indicator">
+            <field name="name">Extractable Potassium (see chemical test report)</field>
+            <field name="type">chemical</field>
+        </record>
+        <record id="soil_chemical_4" model="soil.indicator">
+            <field name="name">Minor Elements (see chemical test report)</field>
+            <field name="type">chemical</field>
+        </record>
+    </data>
+</odoo>

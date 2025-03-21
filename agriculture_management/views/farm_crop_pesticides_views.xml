@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="farm_crop_pesticides_form_view" model="ir.ui.view">
+            <field name="name">farm.crop.pesticides.form.view</field>
+            <field name="model">farm.crop.pesticides</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="pesticide_id"/>
+                            <h1>
+                                <field name="pesticide_id" placeholder="e.g. Crop Pesticides.."
+                                       attrs="{'readonly': ['|', ('bill_id', '!=', False), ('delivery_order_id', '!=', False)]}"
+                                       options="{'no_create':True,'no_create_edit':True}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Crop Disease">
+                                <field name="farm_season_id" readonly="1"/>
+                                <field name="crop_id" options="{'no_create':True,'no_create_edit':True}" required="1"
+                                       attrs="{'readonly': ['|', ('bill_id', '!=', False), ('delivery_order_id', '!=', False)]}"/>
+                                <field name="crop_ids" invisible="1"/>
+                                <field name="farm_crop_disease_id" options="{'no_create':True,'no_create_edit':True}"
+                                       attrs="{'readonly': ['|', ('bill_id', '!=', False), ('delivery_order_id', '!=', False)]}"/>
+
+                                <label for="pkg_qty" string="Package Qty"/>
+                                <div class="address_format">
+                                    <field name="pkg_qty" style="width: auto;"/>
+                                    <strong style="margin-left: 10px;">&#160;Package Size&#160;</strong>
+                                    <field name="unit_id" style="margin-left: 10px; width: auto;"/>
+                                </div>
+                            </group>
+                            <group string="Estimate Cost">
+                                <field name="qty"
+                                       attrs="{'readonly': ['|', ('bill_id', '!=', False), ('delivery_order_id', '!=', False)]}"/>
+                                <field name="cost"
+                                       attrs="{'readonly': ['|', ('bill_id', '!=', False), ('delivery_order_id', '!=', False)]}"/>
+                                <field name="total_price"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+
+                                <label for="bill_id" string="Vendor Bill"/>
+                                <div class="address_format">
+                                    <field name="bill_id" style="width: auto;"
+                                           attrs="{'invisible': [('bill_id', '=', False)]}" readonly="1"/>
+                                    <field name="pesticide_bill_status" widget="badge"
+                                           decoration-danger="pesticide_bill_status == 'pending'"
+                                           decoration-success="pesticide_bill_status == 'bill_created'"
+                                           style="margin-left: 15px; width: auto;"/>
+                                </div>
+
+                                <label for="delivery_order_id" string="Delivery Order"
+                                       attrs="{'invisible': [('delivery_order_id', '=', False)]}"/>
+                                <div class="address_format">
+                                    <field name="delivery_order_id" style="width: auto;"
+                                           attrs="{'invisible': [('delivery_order_id', '=', False)]}" readonly="1"/>
+                                    <field name="delivery_order_state" widget="badge" optional="show"
+                                           decoration-info="delivery_order_state == 'draft'"
+                                           decoration-danger="delivery_order_state == 'cancel'"
+                                           decoration-warning="delivery_order_state in ('waiting', 'confirmed')"
+                                           decoration-success="delivery_order_state in ('assigned', 'done')"
+                                           style="margin-left: 15px; width: auto;"/>
+                                </div>
+
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="farm_crop_pesticides_tree_view" model="ir.ui.view">
+            <field name="name">farm.crop.pesticides.tree.view</field>
+            <field name="model">farm.crop.pesticides</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="farm_season_id"/>
+                    <field name="pesticide_id"/>
+                    <field name="crop_id"/>
+                    <field name="crop_ids" invisible="1"/>
+                    <field name="farm_crop_disease_id"/>
+                    <field name="qty" sum="Qty"/>
+                    <field name="unit_id"/>
+                    <field name="cost" sum="Cost"/>
+                    <field name="total_price" sum="Total Price"/>
+                    <field name="bill_id" widget="many2one_button"/>
+                    <field name="pesticide_bill_status" widget="badge"
+                           decoration-danger="pesticide_bill_status == 'pending'"
+                           decoration-success="pesticide_bill_status == 'bill_created'"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="delivery_order_id" widget="many2one_button"/>
+                    <field name="delivery_order_state" widget="badge" optional="show"
+                           decoration-info="delivery_order_state == 'draft'"
+                           decoration-danger="delivery_order_state == 'cancel'"
+                           decoration-warning="delivery_order_state in ('waiting', 'confirmed')"
+                           decoration-success="delivery_order_state in ('assigned', 'done')"/>
+                </tree>
+            </field>
+        </record>
+        <record id="farm_crop_pesticides_search_view" model="ir.ui.view">
+            <field name="name">farm.crop.pesticides.search.view</field>
+            <field name="model">farm.crop.pesticides</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="pesticide_id"/>
+                    <field name="farm_crop_disease_id"/>
+                    <group string="Group By">
+                        <filter name="farm_crop_disease_id" string="Farm Crop Disease"
+                                context="{'group_by': 'farm_crop_disease_id'}"/>
+                        <filter name="bill_id" string="Vendor Bills"
+                                context="{'group_by': 'bill_id'}"/>
+                        <filter name="delivery_order_id" string="Delivery Orders"
+                                context="{'group_by': 'delivery_order_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_farm_crop_pesticides" model="ir.actions.act_window">
+            <field name="name">Farm Pesticides/Herbs</field>
+            <field name="res_model">farm.crop.pesticides</field>
+            <field name="view_mode">tree,form,search</field>
+        </record>
+
+        <record id="ir_actions_crop_pesticide_bill" model="ir.actions.server">
+            <field name="name">Create Bills</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_farm_crop_pesticides"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action = records.action_crop_pesticide_bill()
+            </field>
+            <field name="binding_model_id" ref="agriculture_management.model_farm_crop_pesticides"/>
+            <field name="binding_view_types">list</field>
+        </record>
+
+        <record id="ir_actions_crop_pesticide_consume_order" model="ir.actions.server">
+            <field name="name">Create Consume Order</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_farm_crop_pesticides"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action = records.action_crop_pesticide_consume_order()
+            </field>
+            <field name="binding_model_id" ref="agriculture_management.model_farm_crop_pesticides"/>
+            <field name="binding_view_types">list</field>
+        </record>
+    </data>
+</odoo>

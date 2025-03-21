@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="soil_analysis_form_view" model="ir.ui.view">
+            <field name="name">soil.analysis.form.view</field>
+            <field name="model">soil.analysis</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="e.g. Soil Analysis.."/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date_of_report" required="1"/>
+                                <field name="farm_id" options="{'no_create':True,'no_create_edit':True}" required="1"/>
+                                <field name="crop_ids" widget="many2many_tags"
+                                       options="{'no_create':True,'no_create_edit':True,'color_field': 'color'}"/>
+                            </group>
+                            <group>
+                                <field name="slope"/>
+                                <field name="drainage_system" widget="radio" options="{'horizontal': True}"/>
+                                <field name="soil_texture"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="physical" string="Physical">
+                                <field name="physical_si_ids" context="{'default_type': 'physical'}">
+                                    <tree editable="bottom">
+                                        <field name="type" invisible="1"/>
+                                        <field name="soil_indicator_id"/>
+                                        <field name="ideal_value"/>
+                                        <field name="actual_value"/>
+                                        <field name="rate"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="biological" string="Biological">
+                                <field name="biological_si_ids" context="{'default_type': 'biological'}">
+                                    <tree editable="bottom">
+                                        <field name="type" invisible="1"/>
+                                        <field name="soil_indicator_id"/>
+                                        <field name="ideal_value"/>
+                                        <field name="actual_value"/>
+                                        <field name="rate"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="chemical" string="Chemical">
+                                <field name="chemical_si_ids" context="{'default_type': 'chemical'}">
+                                    <tree editable="bottom">
+                                        <field name="type" invisible="1"/>
+                                        <field name="soil_indicator_id"/>
+                                        <field name="ideal_value"/>
+                                        <field name="actual_value"/>
+                                        <field name="rate"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <group>
+                            <group>
+                                <field name="soil_quality"/>
+                            </group>
+                            <group>
+                                <field name="quality_score"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="soil_analysis_tree_view" model="ir.ui.view">
+            <field name="name">soil.analysis.tree.view</field>
+            <field name="model">soil.analysis</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="date_of_report"/>
+                    <field name="farm_id"/>
+                    <field name="slope"/>
+                    <field name="drainage_system"/>
+                    <field name="soil_texture"/>
+                </tree>
+            </field>
+        </record>
+        <record id="soil_analysis_kanban_view" model="ir.ui.view">
+            <field name="name">soil.analysis.kanban.view</field>
+            <field name="model">soil.analysis</field>
+            <field name="arch" type="xml">
+                <kanban string="Kanban">
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="date_of_report"/>
+                    <field name="farm_id"/>
+                    <field name="slope"/>
+                    <field name="drainage_system"/>
+                    <field name="soil_texture"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top mb-0">
+                                        <div class="o_kanban_record_headings">
+                                            <strong>
+                                                <field name="name"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    Report Date:
+                                    <field name="date_of_report"/>
+                                    <br/>
+                                    Farm:
+                                    <field name="farm_id"/>
+                                    <br/>
+                                    Slope(%):
+                                    <field name="slope"/>
+                                    <br/>
+                                    Drainage System:
+                                    <field name="drainage_system"/>
+                                    <br/>
+                                    Soil Texture:
+                                    <field name="soil_texture"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="soil_analysis_search_view" model="ir.ui.view">
+            <field name="name">soil.analysis.search.view</field>
+            <field name="model">soil.analysis</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="farm_id"/>
+                    <field name="soil_texture"/>
+                    <group string="Group By">
+                        <filter name="farm_id" string="Farms"
+                                context="{'group_by': 'farm_id'}"/>
+                        <filter name="drainage_system" string="Drainage System"
+                                context="{'group_by': 'drainage_system'}"/>
+                        <filter name="soil_texture" string="Soil Texture"
+                                context="{'group_by': 'soil_texture'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_soil_analysis" model="ir.actions.act_window">
+            <field name="name">Soil Analysis</field>
+            <field name="res_model">soil.analysis</field>
+            <field name="view_mode">kanban,tree,form,search,activity</field>
+        </record>
+    </data>
+</odoo>

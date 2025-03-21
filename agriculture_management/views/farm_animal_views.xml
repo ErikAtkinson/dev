@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="farm_animal_form_view" model="ir.ui.view">
+            <field name="name">farm.animal.form.view</field>
+            <field name="model">farm.animal</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="avatar" widget="image" class="oe_avatar" nolabel="1"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="animal_name" placeholder="e.g. Sheep.." required="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="animal_type" widget="radio" options="{'horizontal': true}"/>
+                            </group>
+                            <group>
+                                <field name="farm_id"  options="{'no_create':True,'no_create_edit':True}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="farm_animal_tree_view" model="ir.ui.view">
+            <field name="name">farm.animal.tree.view</field>
+            <field name="model">farm.animal</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="farm_id"/>
+                    <field name="animal_name"/>
+                    <field name="animal_type"/>
+                </tree>
+            </field>
+        </record>
+        <record id="farm_animal_kanban_view" model="ir.ui.view">
+            <field name="name">farm.animal.kanban.view</field>
+            <field name="model">farm.animal</field>
+            <field name="arch" type="xml">
+                <kanban string="Kanban">
+                    <field name="id"/>
+                    <field name="avatar"/>
+                    <field name="animal_name"/>
+                    <field name="animal_type"/>
+                    <field name="farm_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                                <t t-if="record.avatar.raw_value">
+                                    <div class="o_kanban_image_fill_left d-none d-md-block">
+                                        <img t-att-src="kanban_image('farm.animal', 'avatar', record.id.raw_value)"
+                                             t-att-alt="name" style="margin: 0px;" width="96px" height="96px"
+                                             class="img img-responsive"/>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="o_kanban_image_fill_left d-none d-md-block"
+                                         t-attf-style="background-image: url('/agriculture_management/static/src/img/animal.png')">
+                                    </div>
+                                </t>
+                                <div class="oe_kanban_details" style="margin-left: 10px;">
+                                    <div class="o_kanban_record_top mb-0">
+                                        <div class="o_kanban_record_headings">
+                                            <strong>
+                                                <field name="animal_name"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    Type:
+                                    <field name="animal_type"/>
+                                    <br/>
+                                    Farm:
+                                    <field name="farm_id"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="farm_animal_search_view" model="ir.ui.view">
+            <field name="name">farm.animal.search.view</field>
+            <field name="model">farm.animal</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="animal_name"/>
+                    <field name="animal_type"/>
+                    <group string="Group By">
+                        <filter name="animal_type" string="Animal Type"
+                                context="{'group_by': 'animal_type'}"/>
+                        <filter name="farm_id" string="Farm"
+                                context="{'group_by': 'farm_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_farm_animal" model="ir.actions.act_window">
+            <field name="name">Farm Animals</field>
+            <field name="res_model">farm.animal</field>
+            <field name="view_mode">kanban,tree,form,search</field>
+        </record>
+    </data>
+</odoo>

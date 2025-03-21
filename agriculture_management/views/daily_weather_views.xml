@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="daily_weather_tree_view" model="ir.ui.view">
+            <field name="name">daily.weather.tree.view</field>
+            <field name="model">daily.weather</field>
+            <field name="arch" type="xml">
+                <tree create="false" edit="false">
+                    <field name="weather_type_id"/>
+                    <field name="date"/>
+                    <field name="temperature"/>
+                    <field name="forecast"/>
+                    <field name="real_feel"/>
+                    <field name="wind"/>
+                    <field name="rain"/>
+                    <field name="snow"/>
+                    <field name="ice"/>
+                    <field name="humidity"/>
+                    <field name="visibility"/>
+                </tree>
+            </field>
+        </record>
+        <record id="daily_weather_search_view" model="ir.ui.view">
+            <field name="name">daily.weather.search.view</field>
+            <field name="model">daily.weather</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="weather_type_id"/>
+                    <group string="Group By">
+                        <filter name="weather_type_id" string="Weather Type"
+                                context="{'group_by': 'weather_type_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_daily_weather" model="ir.actions.act_window">
+            <field name="name">Daily Weather</field>
+            <field name="res_model">daily.weather</field>
+            <field name="view_mode">tree,search</field>
+        </record>
+    </data>
+</odoo>

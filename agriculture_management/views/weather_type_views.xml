@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="weather_type_tree_view" model="ir.ui.view">
+            <field name="name">weather.type.tree.view</field>
+            <field name="model">weather.type</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="title"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_weather_type" model="ir.actions.act_window">
+            <field name="name">Weather Type</field>
+            <field name="res_model">weather.type</field>
+            <field name="view_mode">tree</field>
+        </record>
+    </data>
+</odoo>

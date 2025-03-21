@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="electricity_expense_form_view" model="ir.ui.view">
+            <field name="name">electricity.expense.form.view</field>
+            <field name="model">electricity.expense</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="e.g. Electricity.."
+                                       attrs="{'readonly': [('bill_id', '!=', False)]}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="farm_season_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Time Duration">
+                                <field name="start_date" attrs="{'readonly': [('bill_id', '!=', False)]}"/>
+                                <field name="end_date" attrs="{'readonly': [('bill_id', '!=', False)]}"/>
+                            </group>
+                            <group string="Expanse Charge">
+                                <field name="product_id" attrs="{'invisible': [('product_id', '=', False)]}"
+                                       readonly="1" required="0"/>
+                                <field name="standard_price" widget='monetary'
+                                       options="{'currency_field': 'currency_id'}" attrs="{'readonly': [('bill_id', '!=', False)]}"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+                                <label for="bill_id" string="Vendor Bill"/>
+                                <div class="address_format">
+                                    <field name="bill_id" style="width: auto;"
+                                           attrs="{'invisible': [('bill_id', '=', False)]}" readonly="1"/>
+                                    <field name="electricity_bill_status" widget="badge"
+                                           decoration-danger="electricity_bill_status == 'pending'"
+                                           decoration-success="electricity_bill_status == 'bill_created'"
+                                           style="margin-left: 15px; width: auto;"/>
+                                </div>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="electricity_expense_tree_view" model="ir.ui.view">
+            <field name="name">electricity.expense.tree.view</field>
+            <field name="model">electricity.expense</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="farm_season_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="standard_price" widget='monetary' sum="standard_price"
+                           options="{'currency_field': 'currency_id'}"/>
+                    <field name="bill_id" widget="many2one_button"/>
+                    <field name="electricity_bill_status" widget="badge"
+                           decoration-danger="electricity_bill_status == 'pending'"
+                           decoration-success="electricity_bill_status == 'bill_created'"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="electricity_expense_search_view" model="ir.ui.view">
+            <field name="name">electricity.expense.search.view</field>
+            <field name="model">electricity.expense</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <group string="Group By">
+                        <filter name="bill_id" string="Vendor Bills"
+                                context="{'group_by': 'bill_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_electricity_expense" model="ir.actions.act_window">
+            <field name="name">Electricity Expenses</field>
+            <field name="res_model">electricity.expense</field>
+            <field name="view_mode">tree,form,search</field>
+        </record>
+
+        <record id="ir_actions_electricity_expense_bill" model="ir.actions.server">
+            <field name="name">Create Bills</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_electricity_expense"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action = records.action_electricity_expense_bill()
+            </field>
+            <field name="binding_model_id" ref="agriculture_management.model_electricity_expense"/>
+            <field name="binding_view_types">list</field>
+        </record>
+    </data>
+</odoo>

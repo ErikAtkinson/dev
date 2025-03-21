@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="soil_analysis_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="m">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td colspan="2"
+                                        style="text-align: center; background-color: #f5f5f5; padding: 0px; font-size: 25px; padding: 2px;">
+                                        <strong>
+                                            Soil Health Test Report
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">Title:
+                                        <span t-field="m.name"/>
+                                    </td>
+                                    <td style="padding: 2px;">Date of Report:
+                                        <span t-field="m.date_of_report"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">Farm:
+                                        <span t-field="m.farm_id"/>
+                                    </td>
+                                    <td style="padding: 2px;">Slope(%):
+                                        <span t-field="m.slope"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">Farmer:
+                                        <span t-field="m.farm_id.farmer_id"/>
+                                    </td>
+                                    <td style="padding: 2px;">Drainage System:
+                                        <span t-field="m.drainage_system"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">Phone:
+                                        <span t-field="m.farm_id.farmer_id.phone"/>
+                                    </td>
+                                    <td style="padding: 2px;">Soil Texture:
+                                        <span t-field="m.soil_texture"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="padding: 2px;">Crops:
+                                        <br/>
+                                        <span t-field="m.crop_ids"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td style="text-align: left; width: 65%; padding: 2px;">
+                                        <strong>Soil Indicator</strong>
+                                    </td>
+                                    <td style="text-align: right; width: 10%; padding: 2px;">
+                                        <strong>Value</strong>
+                                    </td>
+                                    <td style="text-align: right; width: 15%; padding: 2px;">
+                                        <strong>Ideal Value</strong>
+                                    </td>
+                                    <td style="text-align: right; width: 10%; padding: 2px;">
+                                        <strong>Rating</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"
+                                        style="text-align: center; background-color: #f5f5f5; padding: 0px;">
+                                        <strong>
+                                            Physical
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr t-foreach="m.physical_si_ids" t-as="r">
+                                    <td style="text-align: left; width: 65%; padding: 2px;">
+                                        <span t-field="r.soil_indicator_id"/>
+                                    </td>
+                                    <td style="text-align: right; width: 10%; padding: 2px;">
+                                        <span t-field="r.actual_value"/>
+                                    </td>
+                                    <td style="text-align: right; width: 15%; padding: 2px;">
+                                        <span t-field="r.ideal_value"/>
+                                    </td>
+                                    <td style="text-align: right; width: 10%; padding: 2px;">
+                                        <span t-field="r.rate"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"
+                                        style="text-align: center; background-color: #f5f5f5; padding: 0px;">
+                                        <strong>
+                                            Biological
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr t-foreach="m.biological_si_ids" t-as="r">
+                                    <td style="text-align: left; width: 65%; padding: 2px;">
+                                        <span t-field="r.soil_indicator_id"/>
+                                    </td>
+                                    <td style="text-align: right; width: 10%; padding: 2px;">
+                                        <span t-field="r.actual_value"/>
+                                    </td>
+                                    <td style="text-align: right; width: 15%; padding: 2px;">
+                                        <span t-field="r.ideal_value"/>
+                                    </td>
+                                    <td style="text-align: right; width: 10%; padding: 2px;">
+                                        <span t-field="r.rate"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"
+                                        style="text-align: center; background-color: #f5f5f5; padding: 0px;">
+                                        <strong>
+                                            Chemical
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr t-foreach="m.chemical_si_ids" t-as="r">
+                                    <td style="text-align: left; width: 65%; padding: 2px;">
+                                        <span t-field="r.soil_indicator_id"/>
+                                    </td>
+                                    <td style="text-align: right; width: 10%; padding: 2px;">
+                                        <span t-field="r.actual_value"/>
+                                    </td>
+                                    <td style="text-align: right; width: 15%; padding: 2px;">
+                                        <span t-field="r.ideal_value"/>
+                                    </td>
+                                    <td style="text-align: right; width: 10%; padding: 2px;">
+                                        <span t-field="r.rate"/>
+                                    </td>
+                                </tr>
+                                <tr style="background-color: #f5f5f5;">
+                                    <td style="text-align: left; width: 65%; padding: 2px;">
+                                        <strong>Overall Soil Quality:</strong>
+                                        <span t-field="m.soil_quality"/>
+                                    </td>
+                                    <td colspan="3" style="padding: 2px; width: 35%; text-align: center;">
+                                        <strong>Quality Score(%):</strong>
+                                        <span t-field="m.quality_score"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+    <record id="report_action_soil_analysis_report" model="ir.actions.report">
+        <field name="name">Soil Analysis Report</field>
+        <field name="model">soil.analysis</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">agriculture_management.soil_analysis_report_template</field>
+        <field name="report_file">agriculture_management.soil_analysis_report_template</field>
+        <field name="binding_model_id" ref="model_soil_analysis"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

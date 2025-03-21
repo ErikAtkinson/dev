@@ -1,0 +1,1030 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="agriculture_season_form_view" model="ir.ui.view">
+            <field name="name">agriculture.season.form.view</field>
+            <field name="model">agriculture.season</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="status" widget="statusbar" statusbar_visible="draft,in_progress,done"/>
+                        <button string="In Progress" name="draft_to_in_progress" type="object" class="btn btn-info"
+                                attrs="{'invisible': [('status', '!=', 'draft')]}"/>
+                        <button string="Season End" name="in_progress_to_season_end" type="object"
+                                class="btn btn-success" attrs="{'invisible': [('status', '!=', 'in_progress')]}"/>
+                        <button string="Season Summery Report" name="print_excel" type="object" class="oe_highlight"/>
+                        <button class="btn btn-warning" type="object" name="view_delivery_orders">
+                            <field name="delivery_order_count"/>Consume Orders
+                        </button>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" name="get_season_labours" icon="fa-users">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="labour_charge"/>
+                                    </span>
+                                    <span class="o_stat_text">Labours</span>
+                                </div>
+                            </button>
+                            <button class="oe_stat_button" type="object" name="get_season_crop_fertilisers"
+                                    icon="fa-support">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="fertiliser_charge"/>
+                                    </span>
+                                    <span class="o_stat_text">Fertilisers</span>
+                                </div>
+                            </button>
+                            <button class="oe_stat_button" type="object" name="get_season_crop_pesticides"
+                                    icon="fa-cubes">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="pesticide_charge"/>
+                                    </span>
+                                    <span class="o_stat_text">Pesticides</span>
+                                </div>
+                            </button>
+                            <button class="oe_stat_button" type="object" name="get_crop_seed" icon="fa-lemon-o">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="seed_charge"/>
+                                    </span>
+                                    <span class="o_stat_text">Seeds</span>
+                                </div>
+                            </button>
+                            <button class="oe_stat_button" type="object" name="get_season_equipment_uses"
+                                    icon="fa-cogs">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="equipment_charge"/>
+                                    </span>
+                                    <span class="o_stat_text">Equipments</span>
+                                </div>
+                            </button>
+                            <button class="oe_stat_button" type="object" name="get_season_fleet_uses" icon="fa-truck">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="fleet_charge"/>
+                                    </span>
+                                    <span class="o_stat_text">Fleets</span>
+                                </div>
+                            </button>
+                            <button class="oe_stat_button" type="object" name="get_season_electricity_expanse"
+                                    icon="fa-bolt">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="electricity_expense"/>
+                                    </span>
+                                    <span class="o_stat_text">Electricity</span>
+                                </div>
+                            </button>
+                            <button class="oe_stat_button" type="object" name="get_season_misc_expanse"
+                                    icon="fa-file-text-o">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="misc_expense"/>
+                                    </span>
+                                    <span class="o_stat_text">Misc Expenses</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="agri-state-box" name="button_box">
+                            <button class="agri-state-button-box" type="object" name="view_season_tasks"
+                                    icon="fa-tasks">
+                                <field string="Tasks" name="agriculture_task_count" widget="statinfo"/>
+                            </button>
+                            <button class="agri-state-button-box" type="object" name="view_season_bills"
+                                    icon="fa-money">
+                                <field string="Season Bills" name="season_bill_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <field name="avatar" widget="image" class="oe_avatar" nolabel="1"/>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="e.g. Summer Season.."
+                                       attrs="{'readonly': [('status', '=', 'done')]}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="financial_year_id" required="1"
+                                       attrs="{'readonly': [('status', '=', 'done')]}"
+                                       options="{'no_create':True,'no_create_edit':True}"/>
+                                <field name="farm_id" required="1" options="{'no_create':True,'no_create_edit':True}"
+                                       attrs="{'readonly': [('status', '=', 'done')]}"/>
+                                <field name="farmer_id"/>
+                                <field name="crop_ids" widget="many2many_tags" required="1"
+                                       attrs="{'readonly': [('status', '=', 'done')]}"
+                                       options="{'no_create':True,'no_create_edit':True,'color_field': 'color'}"/>
+                                <field name="agriculture_project_id" readonly="1" required="0"
+                                       attrs="{'invisible': [('agriculture_project_id', '=', False)]}"/>
+                            </group>
+                            <group>
+                                <field name="start_date" required="1" attrs="{'readonly': [('status', '=', 'done')]}"/>
+                                <field name="end_date" required="1" attrs="{'readonly': [('status', '=', 'done')]}"/>
+                                <field name="responsible" widget="many2one_avatar_user" required="1"
+                                       options="{'no_create': True, 'no_create_edit': True}"
+                                       attrs="{'readonly': [('status', '=', 'done')]}"/>
+                                <field name="agronomist_id" options="{'no_create':True,'no_create_edit':True}"
+                                       attrs="{'readonly': [('status', '=', 'done')]}"/>
+                                <field name="field_manager_id" options="{'no_create':True,'no_create_edit':True}"
+                                       attrs="{'readonly': [('status', '=', 'done')]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="season_crop" string="Season Crops">
+                                <field name="season_crop_ids" attrs="{'readonly': [('status', '=', 'done')]}">
+                                    <kanban string="Kanban" class="o_kanban_agriculture_timeline">
+                                        <field name="id"/>
+                                        <field name="crop_id"/>
+                                        <field name="plantation_area"/>
+                                        <field name="land_measure"/>
+                                        <field name="plantation_date"/>
+                                        <field name="expect_end_date"/>
+                                        <field name="plan_date"/>
+                                        <field name="crop_input_date"/>
+                                        <field name="soil_prepare_date"/>
+                                        <field name="plant_date"/>
+                                        <field name="monitor_date"/>
+                                        <field name="harvest_date"/>
+                                        <field name="process_date"/>
+                                        <field name="storage_date"/>
+                                        <field name="is_plan_done"/>
+                                        <field name="is_crop_input_done"/>
+                                        <field name="is_soil_prepare_done"/>
+                                        <field name="is_plant_done"/>
+                                        <field name="is_monitor_done"/>
+                                        <field name="is_harvest_done"/>
+                                        <field name="is_process_done"/>
+                                        <field name="is_storage_done"/>
+                                        <field name="status"/>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="labour_expense"/>
+                                        <field name="fertiliser_expense"/>
+                                        <field name="pesticide_expense"/>
+                                        <field name="seed_expense"/>
+                                        <field name="equipment_expense"/>
+                                        <field name="fleet_expense"/>
+                                        <field name="misc_expense"/>
+                                        <field name="season_task"/>
+                                        <field name="season_status"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div class="oe_kanban_global_click">
+                                                    <div class="row">
+                                                        <div class="col-md-9">
+                                                            <button string="Crop Diseases" class="btn btn-danger m-2"
+                                                                    name="view_season_crop_disease" type="object">
+                                                                <field string="Crop Diseases" name="crop_disease"
+                                                                       widget="statinfo"/>
+                                                            </button>
+                                                            <button string="Crop Productions"
+                                                                    class="btn btn-primary m-2"
+                                                                    name="view_crop_production" type="object">
+                                                                <field string="Crop Productions" name="crop_production"
+                                                                       widget="statinfo"/>
+                                                            </button>
+                                                            <button string="View Tasks" class="btn btn-success m-2"
+                                                                    name="view_season_task" type="object">
+                                                                <field string="Tasks" name="season_task"
+                                                                       widget="statinfo"/>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-md-3 text-end">
+                                                            <button string="Crop Planning" class="btn btn-primary"
+                                                                    name="crop_plan" type="object"
+                                                                    attrs="{'invisible': [('status', '!=', False)]}">
+                                                                Crop Planing
+                                                            </button>
+                                                            <button string="Purchase of Crop Inputs"
+                                                                    class="btn btn-primary" name="crop_input_stage"
+                                                                    type="object"
+                                                                    attrs="{'invisible': [('status', 'not in', ['plan'])]}">
+                                                                Purchase of Crop Inputs
+                                                            </button>
+                                                            <button string="Soil Preparation" class="btn btn-primary"
+                                                                    name="soil_prepare_stage" type="object"
+                                                                    attrs="{'invisible': [('status', 'not in', ['purchase'])]}">
+                                                                Soil Preparation
+                                                            </button>
+                                                            <button string="Planting" class="btn btn-primary"
+                                                                    name="crop_plant_stage" type="object"
+                                                                    attrs="{'invisible': [('status', 'not in', ['soil_prepare'])]}">
+                                                                Planting
+                                                            </button>
+                                                            <button string="Monitoring" class="btn btn-primary"
+                                                                    name="monitor_stage" type="object"
+                                                                    attrs="{'invisible': [('status', 'not in', ['plant'])]}">
+                                                                Monitoring
+                                                            </button>
+                                                            <button string="Harvesting" class="btn btn-primary"
+                                                                    name="harvest_stage" type="object"
+                                                                    attrs="{'invisible': [('status', 'not in', ['monitor'])]}">
+                                                                Harvesting
+                                                            </button>
+                                                            <button string="Processing" class="btn btn-primary"
+                                                                    name="process_stage" type="object"
+                                                                    attrs="{'invisible': [('status', 'not in', ['harvest'])]}">
+                                                                Processing
+                                                            </button>
+                                                            <button string="At Storage" class="btn btn-primary"
+                                                                    name="storage_stage" type="object"
+                                                                    attrs="{'invisible': [('status', 'not in', ['process'])]}">
+                                                                At Storage
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="oe_kanban_details" style="text-align: -webkit-center;">
+                                                        <h5>
+                                                            <field name="crop_id"/>
+                                                        </h5>
+                                                        <span>
+                                                            <field name="plantation_area"/>&#160;
+                                                            <t t-if="record.land_measure.raw_value == 'acre'">Acre</t>
+                                                            <t t-if="record.land_measure.raw_value == 'hectare'">
+                                                                Hectare
+                                                            </t>
+                                                            <t t-if="record.land_measure.raw_value == 'sq_mt'">Square
+                                                                Meter
+                                                            </t>
+                                                            <t t-if="record.land_measure.raw_value == 'bigha'">Bigha</t>
+                                                        </span>
+                                                        <br/>
+                                                        <span>Start Date:
+                                                            <field name="plantation_date"/>
+                                                            <t t-if="record.expect_end_date">&#160;&#160;&#160;
+                                                                Expected End Date:
+                                                                <field name="expect_end_date"/>
+                                                            </t>
+                                                        </span>
+
+                                                        <div class="d-flex flex-row bd-highlight mb-3 justify-content-around">
+                                                            <ul class="timeline" id="timeline">
+                                                                <li t-attf-class="li #{(record.is_plan_done.raw_value) ? 'complete' : ''}">
+                                                                    <div class="timestamp">
+                                                                        <span class="author">
+                                                                        </span>
+                                                                        <span class="date">
+                                                                            <t t-if="(record.is_plan_done.raw_value)">
+                                                                                <field name="plan_date"/>
+                                                                            </t>
+                                                                            <t t-else="">TBD</t>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="status">
+                                                                        <h4>Crop Planning</h4>
+                                                                    </div>
+                                                                </li>
+                                                                <li t-attf-class="li #{(record.is_crop_input_done.raw_value) ? 'complete' : ''}">
+                                                                    <div class="timestamp">
+                                                                        <span class="author">
+                                                                        </span>
+                                                                        <span class="date">
+                                                                            <t t-if="(record.is_crop_input_done.raw_value)">
+                                                                                <field name="crop_input_date"/>
+                                                                            </t>
+                                                                            <t t-else="">TBD</t>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="status">
+                                                                        <h4>Purchase of Crop Inputs</h4>
+                                                                    </div>
+                                                                </li>
+                                                                <li t-attf-class="li #{(record.is_soil_prepare_done.raw_value) ? 'complete' : ''}">
+                                                                    <div class="timestamp">
+                                                                        <span class="author">
+                                                                        </span>
+                                                                        <span class="date">
+                                                                            <t t-if="(record.is_soil_prepare_done.raw_value)">
+                                                                                <field name="soil_prepare_date"/>
+                                                                            </t>
+                                                                            <t t-else="">TBD</t>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="status">
+                                                                        <h4>Soil Preparation</h4>
+                                                                    </div>
+                                                                </li>
+                                                                <li t-attf-class="li #{(record.is_plant_done.raw_value) ? 'complete' : ''}">
+                                                                    <div class="timestamp">
+                                                                        <span class="author">
+                                                                        </span>
+                                                                        <span class="date">
+                                                                            <t t-if="(record.is_plant_done.raw_value)">
+                                                                                <field name="plant_date"/>
+                                                                            </t>
+                                                                            <t t-else="">TBD</t>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="status">
+                                                                        <h4>Planting</h4>
+                                                                    </div>
+                                                                </li>
+                                                                <li t-attf-class="li #{(record.is_monitor_done.raw_value) ? 'complete' : ''}">
+                                                                    <div class="timestamp">
+                                                                        <span class="author">
+                                                                        </span>
+                                                                        <span class="date">
+                                                                            <t t-if="(record.is_monitor_done.raw_value)">
+                                                                                <field name="monitor_date"/>
+                                                                            </t>
+                                                                            <t t-else="">TBD</t>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="status">
+                                                                        <h4>Monitoring</h4>
+                                                                    </div>
+                                                                </li>
+                                                                <li t-attf-class="li #{(record.is_harvest_done.raw_value) ? 'complete' : ''}">
+                                                                    <div class="timestamp">
+                                                                        <span class="author">
+                                                                        </span>
+                                                                        <span class="date">
+                                                                            <t t-if="(record.is_harvest_done.raw_value)">
+                                                                                <field name="harvest_date"/>
+                                                                            </t>
+                                                                            <t t-else="">TBD</t>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="status">
+                                                                        <h4>Harvesting</h4>
+                                                                    </div>
+                                                                </li>
+                                                                <li t-attf-class="li #{(record.is_process_done.raw_value) ? 'complete' : ''}">
+                                                                    <div class="timestamp">
+                                                                        <span class="author">
+                                                                        </span>
+                                                                        <span class="date">
+                                                                            <t t-if="(record.is_process_done.raw_value)">
+                                                                                <field name="process_date"/>
+                                                                            </t>
+                                                                            <t t-else="">TBD</t>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="status">
+                                                                        <h4>Processing</h4>
+                                                                    </div>
+                                                                </li>
+                                                                <li t-attf-class="li #{(record.is_storage_done.raw_value) ? 'complete' : ''}">
+                                                                    <div class="timestamp">
+                                                                        <span class="author">
+                                                                        </span>
+                                                                        <span class="date">
+                                                                            <t t-if="(record.is_storage_done.raw_value)">
+                                                                                <field name="storage_date"/>
+                                                                            </t>
+                                                                            <t t-else="">TBD</t>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="status">
+                                                                        <h4>At Storage</h4>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+
+                                                    <div class="d-flex flex-row bd-highlight mb-3 justify-content-around">
+                                                        <div class="p-2 bd-highlight text-center">
+                                                            <span class="svg-icon svg-icon-muted svg-icon-2hx">
+                                                                <svg width="30" height="30" viewBox="0 0 24 24"
+                                                                     fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M16.0173 9H15.3945C14.2833 9 13.263 9.61425 12.7431 10.5963L12.154 11.7091C12.0645 11.8781 12.1072 12.0868 12.2559 12.2071L12.6402 12.5183C13.2631 13.0225 13.7556 13.6691 14.0764 14.4035L14.2321 14.7601C14.2957 14.9058 14.4396 15 14.5987 15H18.6747C19.7297 15 20.4057 13.8774 19.912 12.945L18.6686 10.5963C18.1487 9.61425 17.1285 9 16.0173 9Z"
+                                                                          fill="currentColor"/>
+                                                                    <rect opacity="0.3" x="14" y="4" width="4"
+                                                                          height="4" rx="2" fill="currentColor"/>
+                                                                    <path d="M4.65486 14.8559C5.40389 13.1224 7.11161 12 9 12C10.8884 12 12.5961 13.1224 13.3451 14.8559L14.793 18.2067C15.3636 19.5271 14.3955 21 12.9571 21H5.04292C3.60453 21 2.63644 19.5271 3.20698 18.2067L4.65486 14.8559Z"
+                                                                          fill="currentColor"/>
+                                                                    <rect opacity="0.3" x="6" y="5" width="6" height="6"
+                                                                          rx="3" fill="currentColor"/>
+                                                                </svg>
+                                                            </span>
+                                                            <h4 class="mb-2">
+                                                                <field name="labour_expense"/>
+                                                            </h4>
+                                                            <h6 class="">Labours Expenses</h6>
+                                                        </div>
+
+                                                        <div class="p-2 bd-highlight text-center">
+                                                            <span class="svg-icon svg-icon-muted svg-icon-2hx">
+                                                                <svg width="30" height="30" viewBox="0 0 20 21"
+                                                                     fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                          d="M16 0.200012H4C1.8 0.200012 0 2.00001 0 4.20001V16.2C0 18.4 1.8 20.2 4 20.2H16C18.2 20.2 20 18.4 20 16.2V4.20001C20 2.00001 18.2 0.200012 16 0.200012ZM15 10.2C15 10.9 14.8 11.6 14.6 12.2H18V16.2C18 17.3 17.1 18.2 16 18.2H12V14.8C11.4 15.1 10.7 15.2 10 15.2C9.3 15.2 8.6 15 8 14.8V18.2H4C2.9 18.2 2 17.3 2 16.2V12.2H5.4C5.1 11.6 5 10.9 5 10.2C5 9.50001 5.2 8.80001 5.4 8.20001H2V4.20001C2 3.10001 2.9 2.20001 4 2.20001H8V5.60001C8.6 5.30001 9.3 5.20001 10 5.20001C10.7 5.20001 11.4 5.40001 12 5.60001V2.20001H16C17.1 2.20001 18 3.10001 18 4.20001V8.20001H14.6C14.8 8.80001 15 9.50001 15 10.2Z"
+                                                                          fill="currentColor"/>
+                                                                    <path d="M12 1.40002C15.4 2.20002 18 4.80003 18.8 8.20003H14.6C14.1 7.00003 13.2 6.10003 12 5.60003V1.40002ZM5.40001 8.20003C5.90001 7.00003 6.80001 6.10003 8.00001 5.60003V1.40002C4.60001 2.20002 2.00001 4.80003 1.20001 8.20003H5.40001ZM14.6 12.2C14.1 13.4 13.2 14.3 12 14.8V19C15.4 18.2 18 15.6 18.8 12.2H14.6ZM8.00001 14.8C6.80001 14.3 5.90001 13.4 5.40001 12.2H1.20001C2.00001 15.6 4.60001 18.2 8.00001 19V14.8Z"
+                                                                          fill="currentColor"/>
+                                                                </svg>
+                                                            </span>
+                                                            <h4 class="mb-2">
+                                                                <field name="fertiliser_expense"/>
+                                                            </h4>
+                                                            <h6 class="">Fertilisers Expenses</h6>
+                                                        </div>
+
+                                                        <div class="p-2 bd-highlight text-center">
+                                                            <span class="svg-icon svg-icon-muted svg-icon-2hx">
+                                                                <svg width="30" height="30" viewBox="0 0 24 24"
+                                                                     fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                          d="M20.859 12.596L17.736 13.596L10.388 20.944C10.2915 21.0406 10.1769 21.1172 10.0508 21.1695C9.9247 21.2218 9.78953 21.2486 9.65302 21.2486C9.5165 21.2486 9.3813 21.2218 9.25519 21.1695C9.12907 21.1172 9.01449 21.0406 8.918 20.944L2.29999 14.3229C2.10543 14.1278 1.99619 13.8635 1.99619 13.588C1.99619 13.3124 2.10543 13.0481 2.29999 12.853L11.853 3.29999C11.9495 3.20341 12.0641 3.12679 12.1902 3.07452C12.3163 3.02225 12.4515 2.9953 12.588 2.9953C12.7245 2.9953 12.8597 3.02225 12.9858 3.07452C13.1119 3.12679 13.2265 3.20341 13.323 3.29999L21.199 11.176C21.3036 11.2791 21.3797 11.4075 21.4201 11.5486C21.4605 11.6898 21.4637 11.8391 21.4295 11.9819C21.3953 12.1247 21.3249 12.2562 21.2249 12.3638C21.125 12.4714 20.9989 12.5514 20.859 12.596Z"
+                                                                          fill="currentColor"/>
+                                                                    <path d="M14.8 10.184C14.7447 10.1843 14.6895 10.1796 14.635 10.1699L5.816 8.69997C5.55436 8.65634 5.32077 8.51055 5.16661 8.29469C5.01246 8.07884 4.95035 7.8106 4.99397 7.54897C5.0376 7.28733 5.18339 7.05371 5.39925 6.89955C5.6151 6.7454 5.88334 6.68332 6.14498 6.72694L14.963 8.19692C15.2112 8.23733 15.435 8.36982 15.59 8.56789C15.7449 8.76596 15.8195 9.01502 15.7989 9.26564C15.7784 9.51626 15.6642 9.75001 15.479 9.92018C15.2939 10.0904 15.0514 10.1846 14.8 10.184ZM17 18.6229C17 19.0281 17.0985 19.4272 17.287 19.7859C17.4755 20.1446 17.7484 20.4521 18.0821 20.6819C18.4158 20.9117 18.8004 21.0571 19.2027 21.1052C19.605 21.1534 20.0131 21.103 20.3916 20.9585C20.7702 20.814 21.1079 20.5797 21.3758 20.2757C21.6437 19.9716 21.8336 19.607 21.9293 19.2133C22.025 18.8195 22.0235 18.4085 21.925 18.0154C21.8266 17.6223 21.634 17.259 21.364 16.9569L19.843 15.257C19.7999 15.2085 19.7471 15.1697 19.688 15.1432C19.6289 15.1167 19.5648 15.1029 19.5 15.1029C19.4352 15.1029 19.3711 15.1167 19.312 15.1432C19.2529 15.1697 19.2001 15.2085 19.157 15.257L17.636 16.9569C17.2254 17.4146 16.9988 18.0081 17 18.6229ZM10.388 20.9409L17.736 13.5929H1.99999C1.99921 13.7291 2.02532 13.8643 2.0768 13.9904C2.12828 14.1165 2.2041 14.2311 2.29997 14.3279L8.91399 20.9409C9.01055 21.0381 9.12539 21.1152 9.25188 21.1679C9.37836 21.2205 9.51399 21.2476 9.65099 21.2476C9.78798 21.2476 9.92361 21.2205 10.0501 21.1679C10.1766 21.1152 10.2914 21.0381 10.388 20.9409Z"
+                                                                          fill="currentColor"/>
+                                                                </svg>
+                                                            </span>
+                                                            <h4 class="mb-2">
+                                                                <field name="pesticide_expense"/>
+                                                            </h4>
+                                                            <h6 class="">Pesticides Expenses</h6>
+                                                        </div>
+
+                                                        <div class="p-2 bd-highlight text-center">
+                                                            <span class="svg-icon svg-icon-muted svg-icon-2hx">
+                                                                <svg width="30" height="30" viewBox="0 0 24 24"
+                                                                     fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M11 15.9C9.5 13 6.5 11 3 11C3 15.6 6.5 19.4 11 19.9V15.9Z"
+                                                                          fill="currentColor"/>
+                                                                    <path opacity="0.3"
+                                                                          d="M21 11C17.5 11 14.5 13 13 15.9V11C13 10.4 12.6 10 12 10C11.4 10 11 10.4 11 11V21C11 21.6 11.4 22 12 22C12.6 22 13 21.6 13 21V19.9C17.5 19.4 21 15.6 21 11Z"
+                                                                          fill="currentColor"/>
+                                                                    <path opacity="0.3"
+                                                                          d="M12 9C13.933 9 15.5 7.433 15.5 5.5C15.5 3.567 13.933 2 12 2C10.067 2 8.5 3.567 8.5 5.5C8.5 7.433 10.067 9 12 9Z"
+                                                                          fill="currentColor"/>
+                                                                    <path d="M14 11L12 12L10 11V8.40002H14V11Z"
+                                                                          fill="currentColor"/>
+                                                                </svg>
+                                                            </span>
+                                                            <h4 class="mb-2">
+                                                                <field name="seed_expense"/>
+                                                            </h4>
+                                                            <h6 class="">Seeds Expenses</h6>
+                                                        </div>
+
+                                                        <div class="p-2 bd-highlight text-center">
+                                                            <span class="svg-icon svg-icon-muted svg-icon-2hx">
+                                                                <svg width="30" height="30" viewBox="0 0 24 24"
+                                                                     fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                          d="M20.0381 4V10C20.0381 10.6 19.6381 11 19.0381 11H17.0381C16.4381 11 16.0381 10.6 16.0381 10V4C16.0381 2.9 16.9381 2 18.0381 2C19.1381 2 20.0381 2.9 20.0381 4ZM9.73808 18.9C10.7381 18.5 11.2381 17.3 10.8381 16.3L5.83808 3.29999C5.43808 2.29999 4.23808 1.80001 3.23808 2.20001C2.23808 2.60001 1.73809 3.79999 2.13809 4.79999L7.13809 17.8C7.43809 18.6 8.23808 19.1 9.03808 19.1C9.23808 19 9.53808 19 9.73808 18.9ZM19.0381 18H17.0381V20H19.0381V18Z"
+                                                                          fill="currentColor"/>
+                                                                    <path d="M18.0381 6H4.03809C2.93809 6 2.03809 5.1 2.03809 4C2.03809 2.9 2.93809 2 4.03809 2H18.0381C19.1381 2 20.0381 2.9 20.0381 4C20.0381 5.1 19.1381 6 18.0381 6ZM4.03809 3C3.43809 3 3.03809 3.4 3.03809 4C3.03809 4.6 3.43809 5 4.03809 5C4.63809 5 5.03809 4.6 5.03809 4C5.03809 3.4 4.63809 3 4.03809 3ZM18.0381 3C17.4381 3 17.0381 3.4 17.0381 4C17.0381 4.6 17.4381 5 18.0381 5C18.6381 5 19.0381 4.6 19.0381 4C19.0381 3.4 18.6381 3 18.0381 3ZM12.0381 17V22H6.03809V17C6.03809 15.3 7.33809 14 9.03809 14C10.7381 14 12.0381 15.3 12.0381 17ZM9.03809 15.5C8.23809 15.5 7.53809 16.2 7.53809 17C7.53809 17.8 8.23809 18.5 9.03809 18.5C9.83809 18.5 10.5381 17.8 10.5381 17C10.5381 16.2 9.83809 15.5 9.03809 15.5ZM15.0381 15H17.0381V13H16.0381V8L14.0381 10V14C14.0381 14.6 14.4381 15 15.0381 15ZM19.0381 15H21.0381C21.6381 15 22.0381 14.6 22.0381 14V10L20.0381 8V13H19.0381V15ZM21.0381 20H15.0381V22H21.0381V20Z"
+                                                                          fill="currentColor"/>
+                                                                </svg>
+                                                            </span>
+                                                            <h4 class="mb-2">
+                                                                <field name="equipment_expense"/>
+                                                            </h4>
+                                                            <h6 class="">Equipments Expenses</h6>
+                                                        </div>
+
+                                                        <div class="p-2 bd-highlight text-center">
+                                                            <span class="svg-icon svg-icon-muted svg-icon-2hx">
+                                                                <svg width="30" height="30" viewBox="0 0 24 24"
+                                                                     fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M20 8H16C15.4 8 15 8.4 15 9V16H10V17C10 17.6 10.4 18 11 18H16C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18H21C21.6 18 22 17.6 22 17V13L20 8Z"
+                                                                          fill="currentColor"/>
+                                                                    <path opacity="0.3"
+                                                                          d="M20 18C20 19.1 19.1 20 18 20C16.9 20 16 19.1 16 18C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18ZM15 4C15 3.4 14.6 3 14 3H3C2.4 3 2 3.4 2 4V13C2 13.6 2.4 14 3 14H15V4ZM6 16C4.9 16 4 16.9 4 18C4 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16Z"
+                                                                          fill="currentColor"/>
+                                                                </svg>
+                                                            </span>
+                                                            <h4 class="mb-2">
+                                                                <field name="fleet_expense"/>
+                                                            </h4>
+                                                            <h6 class="">Fleets Expenses</h6>
+                                                        </div>
+
+                                                        <div class="p-2 bd-highlight text-center">
+                                                            <span class="svg-icon svg-icon-muted svg-icon-2hx">
+                                                                <svg width="30" height="30" viewBox="0 0 24 24"
+                                                                     fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path opacity="0.3"
+                                                                          d="M18 22C19.7 22 21 20.7 21 19C21 18.5 20.9 18.1 20.7 17.7L15.3 6.30005C15.1 5.90005 15 5.5 15 5C15 3.3 16.3 2 18 2H6C4.3 2 3 3.3 3 5C3 5.5 3.1 5.90005 3.3 6.30005L8.7 17.7C8.9 18.1 9 18.5 9 19C9 20.7 7.7 22 6 22H18Z"
+                                                                          fill="currentColor"/>
+                                                                    <path d="M18 2C19.7 2 21 3.3 21 5H9C9 3.3 7.7 2 6 2H18Z"
+                                                                          fill="currentColor"/>
+                                                                    <path d="M9 19C9 20.7 7.7 22 6 22C4.3 22 3 20.7 3 19H9Z"
+                                                                          fill="currentColor"/>
+                                                                </svg>
+                                                            </span>
+                                                            <h4 class="mb-2">
+                                                                <field name="misc_expense"/>
+                                                            </h4>
+                                                            <h6 class="">Misc Expenses</h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <button name="action_season_tasks"
+                                                                    attrs="{'invisible': [('season_status', '=', 'done')]}"
+                                                                    class="btn btn-primary m-2" type="object">Create
+                                                                Task
+                                                            </button>
+                                                            <button name="%(action_crop_template_task)d"
+                                                                    string="Create Task From Template" type="action"
+                                                                    class="btn btn-primary m-2"
+                                                                    attrs="{'invisible': [('season_status', '=', 'done')]}"
+                                                                    context="{'crop_id': crop_id}">
+                                                                Create Task From Template
+                                                            </button>
+                                                            <button name="action_farm_crop_disease"
+                                                                    string="Crop Disease" type="object"
+                                                                    attrs="{'invisible': [('season_status', '=', 'done')]}"
+                                                                    class="btn btn-primary m-2">+ Crop Disease
+                                                            </button>
+                                                            <button name="action_add_season_crop_production"
+                                                                    string="Crop Production" type="object"
+                                                                    class="btn btn-primary m-2">+ Crop Production
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </page>
+                            <page name="crop_disease" string="Crops Diseases">
+                                <field name="crop_disease_ids" attrs="{'readonly': [('status', '=', 'done')]}"/>
+                            </page>
+                            <page name="field_visit" string="Field Visits">
+                                <field name="field_visit_ids" attrs="{'readonly': [('status', '=', 'done')]}">
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <group string="Crop Details">
+                                                    <field name="farm_season_id" readonly="1"/>
+                                                    <field name="crop_ids" invisible="1"/>
+                                                    <field name="crop_id"
+                                                           options="{'no_create':True,'no_create_edit':True}"/>
+                                                </group>
+                                                <group string="Visiting Details">
+                                                    <field name="date_of_visit"/>
+                                                    <field name="officer_id"
+                                                           options="{'no_create':True,'no_create_edit':True}"/>
+                                                </group>
+                                            </group>
+                                            <group>
+                                                <group string="Instruction Details">
+                                                    <field name="instruction_type" widget="radio"
+                                                           options="{'horizontal': true}"/>
+                                                </group>
+                                            </group>
+                                            <hr/>
+                                            <field name="crop_images_ids">
+                                                <form>
+                                                    <sheet>
+                                                        <div class="oe_title float-left">
+                                                            <h1>
+                                                                <field name="name" placeholder="e.g. Name"/>
+                                                            </h1>
+                                                        </div>
+                                                        <div style="width: 40%; height: 40%;" class="float-right">
+                                                            <field name="avatar" style="width: 40%; height: 40%;"
+                                                                   class="img-thumbnail float-right" widget="image"/>
+                                                        </div>
+                                                    </sheet>
+                                                </form>
+                                                <kanban string="Kanban" class="">
+                                                    <field name="id"/>
+                                                    <field name="avatar"/>
+                                                    <field name="name"/>
+                                                    <templates>
+                                                        <t t-name="kanban-box">
+                                                            <div class="card oe_kanban_global_click p-0 border-0">
+                                                                <div class="row">
+                                                                    <div class="col-8">
+                                                                        <strong>
+                                                                            <field name="name"/>
+                                                                        </strong>
+                                                                    </div>
+                                                                    <div class="col-4 text-end">
+                                                                        <!-- below 100 Kb: good -->
+                                                                        <t t-if="record.avatar.raw_value.length &lt; 100*1000">
+                                                                            <t t-set="size_status"
+                                                                               t-value="'text-bg-success'"/>
+                                                                            <t t-set="message">Acceptable file size</t>
+                                                                        </t>
+                                                                        <!-- below 1000 Kb: decent -->
+                                                                        <t t-elif="record.avatar.raw_value.length &lt; 1000*1000">
+                                                                            <t t-set="size_status"
+                                                                               t-value="'text-bg-warning'"/>
+                                                                            <t t-set="message">Huge file size. The image
+                                                                                should be optimized/reduced.
+                                                                            </t>
+                                                                        </t>
+                                                                        <!-- above 1000 Kb: bad -->
+                                                                        <t t-else="1">
+                                                                            <t t-set="size_status"
+                                                                               t-value="'text-bg-danger'"/>
+                                                                            <t t-set="message">Optimization required!
+                                                                                Reduce the
+                                                                                image size or increase your compression
+                                                                                settings.
+                                                                            </t>
+                                                                        </t>
+                                                                        <span t-attf-class="badge #{size_status} o_product_image_size"
+                                                                              t-esc="record.avatar.value"
+                                                                              t-att-title="message"/>
+                                                                    </div>
+                                                                </div>
+                                                                <hr class="mb-1 mt-1"/>
+                                                                <div class="o_squared_image">
+                                                                    <img class="card-img-top"
+                                                                         style="height:223px;object-fit: cover;"
+                                                                         t-att-src="kanban_image('crop.images', 'avatar', record.id.raw_value)"
+                                                                         t-att-alt="record.name.value"/>
+                                                                </div>
+                                                            </div>
+                                                        </t>
+                                                    </templates>
+                                                </kanban>
+                                            </field>
+                                            <hr/>
+                                            <h6>Current Status of Crop</h6>
+                                            <field name="current_status_of_crop"/>
+                                            <hr/>
+                                            <h6>Instructions</h6>
+                                            <field name="instructions"/>
+                                        </sheet>
+                                        <div class="oe_chatter">
+                                            <field name="message_follower_ids"/>
+                                            <field name="activity_ids"/>
+                                            <field name="message_ids"/>
+                                        </div>
+                                    </form>
+                                </field>
+                            </page>
+                            <page name="agriculture_task" string="Agriculture Tasks">
+                                <field name="agriculture_task_ids" attrs="{'readonly': [('status', '=', 'done')]}">
+                                    <form>
+                                        <sheet>
+                                            <div class="oe_title">
+                                                <label for="title"/>
+                                                <h1>
+                                                    <field name="title" placeholder="e.g. Title"/>
+                                                </h1>
+                                            </div>
+                                            <group>
+                                                <group>
+                                                    <field name="user_id" widget="many2one_avatar_user"
+                                                           options="{'no_create':True,'no_create_edit':True}"/>
+                                                </group>
+                                                <group>
+                                                    <field name="agriculture_season_id"
+                                                           options="{'no_create':True,'no_create_edit':True}"/>
+                                                    <field name="crop_id" required="1"
+                                                           options="{'no_create':True,'no_create_edit':True}"/>
+                                                    <field name="crop_ids" invisible="1"/>
+                                                </group>
+                                            </group>
+                                            <group>
+                                                <group string="Task Details">
+                                                    <label for="agriculture_task_id" string="Task"/>
+                                                    <div class="address_format">
+                                                        <field name="agriculture_task_id" readonly="1" force_save="1"
+                                                               style="width: auto;"/>
+                                                        <field name="status"
+                                                               decoration-info="status == 'a_start'"
+                                                               decoration-warning="status == 'b_in_progress'"
+                                                               decoration-success="status == 'c_complete'"
+                                                               optional="show" widget="badge"
+                                                               style="width: auto; margin-left: 15px;"/>
+                                                    </div>
+                                                </group>
+                                                <group string="Task Dates">
+                                                    <field name="start_date" required="1"/>
+                                                    <field name="expected_end_date" required="1"/>
+                                                </group>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                    <tree editable="bottom">
+                                        <field name="title"/>
+                                        <field name="crop_id" required="1"
+                                               options="{'no_create':True,'no_create_edit':True}"/>
+                                        <field name="crop_ids" invisible="1"/>
+                                        <field name="crop_phase" required="1"/>
+                                        <field name="start_date" required="1"/>
+                                        <field name="expected_end_date" required="1"/>
+                                        <field name="user_id" widget="many2one_avatar_user"
+                                               options="{'no_create':True,'no_create_edit':True}"/>
+                                        <field name="agriculture_task_id" readonly="1" force_save="1"
+                                               widget="many2one_button"/>
+                                        <field name="status"
+                                               decoration-info="status == 'a_start'"
+                                               decoration-warning="status == 'b_in_progress'"
+                                               decoration-success="status == 'c_complete'"
+                                               optional="show" widget="badge" nolabel="1"/>
+                                        <button name="action_create_task" string="Create Task" type="object"
+                                                class="oe_highlight"
+                                                attrs="{'invisible': [('agriculture_task_id', '!=', False)]}"/>
+                                    </tree>
+                                </field>
+                                <button name="action_create_all_task" string="Create All Tasks" type="object"
+                                        class="oe_highlight" attrs="{'invisible': [('status', '=', 'done')]}"/>
+                            </page>
+                            <page name="crop_production" string="Crop Production">
+                                <field name="crop_production_ids" attrs="{'readonly': [('status', '=', 'done')]}">
+                                    <tree>
+                                        <field name="crop_id"/>
+                                        <field name="crop_ids" invisible="1"/>
+                                        <field name="date"/>
+                                        <field name="description"/>
+                                        <field name="agriculture_warehouse_id"/>
+                                        <field name="qty"/>
+                                        <field name="qty_on_hand"/>
+                                        <field name="unit_id"/>
+                                        <field name="price"/>
+                                        <field name="total_production_price" sum="Total Income"/>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="crop_disaster" string="Crop Incidents">
+                                <field name="crop_incident_ids" attrs="{'readonly': [('status', '=', 'done')]}">
+                                    <form>
+                                        <sheet>
+                                            <div class="oe_title">
+                                                <label for="crop_incident_id"/>
+                                                <h1>
+                                                    <field name="crop_incident_id" placeholder="e.g. Crop Incident"
+                                                           options="{'no_create':True,'no_create_edit':True}"/>
+                                                </h1>
+                                            </div>
+                                            <group>
+                                                <group>
+                                                    <field name="crop_id" required="1"
+                                                           options="{'no_create':True,'no_create_edit':True}"/>
+                                                    <field name="crop_ids" invisible="1"/>
+                                                    <field name="farm_season_id" readonly="1"/>
+                                                </group>
+                                                <group>
+                                                    <field name="date" required="1"/>
+                                                    <field name="value" string="Estimated Damage Value"/>
+                                                    <field name="company_id" invisible="1"/>
+                                                    <field name="currency_id" invisible="1"/>
+                                                </group>
+                                            </group>
+                                            <h6>Incident Details</h6>
+                                            <field name="description"/>
+                                        </sheet>
+                                        <div class="oe_chatter">
+                                            <field name="message_follower_ids"/>
+                                            <field name="activity_ids"/>
+                                            <field name="message_ids"/>
+                                        </div>
+                                    </form>
+                                    <tree>
+                                        <field name="crop_incident_id"/>
+                                        <field name="crop_id"/>
+                                        <field name="crop_ids" invisible="1"/>
+                                        <field name="date"/>
+                                        <field name="value" string="Estimated Damage Values" sum="Total Value"/>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="season_budget" string="Season Budgets">
+                                <field name="season_budget_ids" attrs="{'readonly': [('status', '=', 'done')]}">
+                                    <form>
+                                        <sheet>
+                                            <div class="oe_title">
+                                                <label for="crop_id"/>
+                                                <h1>
+                                                    <field name="crop_id"
+                                                           options="{'no_create':True,'no_create_edit':True}"/>
+                                                </h1>
+                                            </div>
+                                            <group>
+                                                <group string="Budget Details">
+                                                    <field name="farm_season_id" readonly="1"
+                                                           options="{'no_create':True,'no_create_edit':True}"/>
+                                                    <field name="crop_ids" invisible="1"/>
+                                                    <field name="budget_type"/>
+                                                </group>
+                                                <group string="Estimation Price">
+                                                    <label for="qty" string="Qty"/>
+                                                    <div class="address_format">
+                                                        <field name="qty" style="width: 35%"/>
+                                                        <strong>&#160;&#160;Unit&#160;&#160;</strong>
+                                                        <field name="unit_id" style="width: 35%"
+                                                               options="{'no_create':True,'no_create_edit':True}"/>
+                                                    </div>
+                                                    <field name="price" widget="monetary"/>
+                                                    <field name="total_price"/>
+                                                    <field name="company_id" invisible="1"/>
+                                                    <field name="currency_id" invisible="1"/>
+                                                </group>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                    <tree>
+                                        <field name="crop_id"/>
+                                        <field name="crop_ids" invisible="1"/>
+                                        <field name="budget_type"/>
+                                        <field name="qty"/>
+                                        <field name="unit_id"/>
+                                        <field name="price"/>
+                                        <field name="total_price" sum="Total Price"/>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <div class="row" style="margin-top: 5px;">
+                            <div class="col-6" style="text-align: left;">
+                                <h6>Total Income</h6>
+                                <hr style="margin-right: 62%; margin-top: 0px; margin-bottom: 0px;"/>
+                                Production Income:
+                                <field name="production_price"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+                                <br/>
+                                <h6>Profit &amp; Loss</h6>
+                                <hr style="margin-right: 70%; margin-top: 0px; margin-bottom: 0px;"/>
+                                Profit &amp; Loss:
+                                <field name="total_product_income"/>
+                            </div>
+                            <div class="col-6" style="text-align: right;">
+                                <h6>Total Expenses</h6>
+                                <hr style="margin-left: 62%; margin-top: 0px; margin-bottom: 0px;"/>
+                                Labour Expenses:
+                                <field name="labour_charge"/>
+                                <br/>
+                                Fertiliser Expenses:
+                                <field name="fertiliser_charge"/>
+                                <br/>
+                                Pesticide Expenses:
+                                <field name="pesticide_charge"/>
+                                <br/>
+                                Seed Expenses:
+                                <field name="seed_charge"/>
+                                <br/>
+                                Equipment Expenses:
+                                <field name="equipment_charge"/>
+                                <br/>
+                                Fleet Expenses:
+                                <field name="fleet_charge"/>
+                                <br/>
+                                Electricity Expense:
+                                <field name="electricity_expense"/>
+                                <br/>
+                                Misc Expenses:
+                                <field name="misc_expense"/>
+                                <br/>
+                                Crop Incidents:
+                                <field name="crop_incident"/>
+                                <br/>
+                                <hr style="margin-left: 62%; margin-top: 0px; margin-bottom: 0px;"/>
+                                <strong>
+                                    Total Expenses:
+                                    <field name="total_cost"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </strong>
+                            </div>
+                        </div>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="agriculture_season_tree_view" model="ir.ui.view">
+            <field name="name">agriculture.season.tree.view</field>
+            <field name="model">agriculture.season</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="financial_year_id"/>
+                    <field name="name"/>
+                    <field name="farm_id"/>
+                    <field name="farmer_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="crop_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    <field name="status" widget="badge"
+                           decoration-info="status == 'draft'"
+                           decoration-warning="status == 'in_progress'"
+                           decoration-success="status == 'done'"/>
+                </tree>
+            </field>
+        </record>
+        <record id="agriculture_season_kanban_view" model="ir.ui.view">
+            <field name="name">agriculture.season.kanban.view</field>
+            <field name="model">agriculture.season</field>
+            <field name="arch" type="xml">
+                <kanban string="Kanban" records_draggable="false">
+                    <field name="id"/>
+                    <field name="avatar"/>
+                    <field name="name"/>
+                    <field name="farmer_id"/>
+                    <field name="crop_ids"/>
+                    <field name="financial_year_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="activity_ids"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                                <t t-if="record.avatar.raw_value">
+                                    <img alt="Avtar"
+                                         t-att-src="kanban_image('agriculture.season', 'avatar', record.id.raw_value)"
+                                         style="width:100px;height:100px;object-fit: cover;"/>
+                                </t>
+                                <t t-else="">
+                                    <img style="width:100px;height:100px;object-fit: cover;" alt="Image"
+                                         src="agriculture_management/static/src/img/season.png"/>
+                                </t>
+                                <div class="oe_kanban_details d-flex flex-column ms-1">
+                                    <div class="oe_kanban_details">
+                                        <div class="o_kanban_record_top">
+                                            <div class="o_kanban_record_headings">
+                                                <strong>
+                                                    <field name="name"/>&#160;(<field name="financial_year_id"/>)
+                                                </strong>
+                                            </div>
+                                            <field name="responsible" widget="many2one_avatar_user"/>
+                                        </div>
+                                        <field name="crop_ids" widget="many2many_tags"
+                                               options="{'color_field': 'color'}"/>
+                                        <field name="start_date"/>&#160;to&#160;<field name="end_date"/>
+                                        <div class="o_kanban_record_bottom">
+                                            <div class="oe_kanban_bottom_left">
+                                                <span>
+                                                    <field name="activity_ids" widget="kanban_activity"/>
+                                                </span>
+                                            </div>
+                                            <div class="oe_kanban_bottom_right">
+                                                <field name="status" widget="label_selection"
+                                                       options="{'classes': {'draft': 'info', 'in_progress': 'warning', 'done': 'success'}}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="agriculture_season_calendar_view" model="ir.ui.view">
+            <field name="name">agriculture.season.calendar.view</field>
+            <field name="model">agriculture.season</field>
+            <field name="arch" type="xml">
+                <calendar string="Agriculture Season Calendar"
+                          date_start="start_date"
+                          event_open_popup="true"
+                          mode="month"
+                          color="financial_year_id"
+                          scales="day,month,year"
+                          quick_add="False">
+                    <field name="financial_year_id" filters="1"/>
+                    <field name="farm_id"/>
+                    <field name="farmer_id"/>
+                    <field name="agronomist_id"/>
+                    <field name="field_manager_id"/>
+                    <field name="responsible"/>
+                </calendar>
+            </field>
+        </record>
+        <record id="agriculture_season_search_view" model="ir.ui.view">
+            <field name="name">agriculture.season.search.view</field>
+            <field name="model">agriculture.season</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="farm_id"/>
+                    <field name="farmer_id"/>
+                    <group string="Group By">
+                        <filter name="status" string="Season Status"
+                                context="{'group_by': 'status'}"/>
+                        <filter name="farm_id" string="Land/Farm"
+                                context="{'group_by': 'farm_id'}"/>
+                        <filter name="farmer_id" string="Farmer"
+                                context="{'group_by': 'farmer_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_agriculture_season" model="ir.actions.act_window">
+            <field name="name">Agriculture Seasons</field>
+            <field name="res_model">agriculture.season</field>
+            <field name="view_mode">kanban,tree,form,calendar,search,activity</field>
+            <field name="context">{'search_default_status': 1}</field>
+        </record>
+    </data>
+</odoo>

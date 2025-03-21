@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="season_crop_form_view" model="ir.ui.view">
+            <field name="name">season.crop.form.view</field>
+            <field name="model">season.crop</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="status" widget="statusbar"/>
+                        <button string="Crop Planning" class="btn btn-primary" name="crop_plan" type="object"
+                                attrs="{'invisible': [('status', '!=', False)]}"/>
+                        <button string="Purchase of Crop Inputs" class="btn btn-primary" name="crop_input_stage"
+                                type="object" attrs="{'invisible': [('status', 'not in', ['plan'])]}"/>
+                        <button string="Soil Preparation" class="btn btn-primary" name="soil_prepare_stage"
+                                type="object"
+                                attrs="{'invisible': [('status', 'not in', ['purchase'])]}"/>
+                        <button string="Planting" class="btn btn-primary" name="crop_plant_stage" type="object"
+                                attrs="{'invisible': [('status', 'not in', ['soil_prepare'])]}"/>
+                        <button string="Monitoring" class="btn btn-primary" name="monitor_stage" type="object"
+                                attrs="{'invisible': [('status', 'not in', ['plant'])]}"/>
+                        <button string="Harvesting" class="btn btn-primary" name="harvest_stage" type="object"
+                                attrs="{'invisible': [('status', 'not in', ['monitor'])]}"/>
+                        <button string="Processing" class="btn btn-primary" name="process_stage" type="object"
+                                attrs="{'invisible': [('status', 'not in', ['harvest'])]}"/>
+                        <button string="At Storage" class="btn btn-primary" name="storage_stage" type="object"
+                                attrs="{'invisible': [('status', 'not in', ['process'])]}"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="crop_id"/>
+                            <h1>
+                                <field name="crop_id" placeholder="e.g. Crop Name"
+                                       options="{'no_create':True,'no_create_edit':True}"/>
+                                <field name="crop_ids" invisible="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Land Details">
+                                <field name="plantation_area"/>
+                                <field name="land_measure"/>
+                            </group>
+                            <group string="Duration">
+                                <field name="plantation_date" required="1"/>
+                                <field name="expect_end_date" required="1"/>
+                            </group>
+                        </group>
+                        <group string="Expenses">
+                            <group>
+                                <field name="labour_expense"/>
+                                <field name="fertiliser_expense"/>
+                                <field name="pesticide_expense"/>
+                                <field name="seed_expense"/>
+                            </group>
+                            <group>
+                                <field name="equipment_expense"/>
+                                <field name="fleet_expense"/>
+                                <field name="misc_expense"/>
+                                <field name="season_task" invisible="1"/>
+                            </group>
+                            <field name="company_id" invisible="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="season_crop_tree_view" model="ir.ui.view">
+            <field name="name">season.crop.tree.view</field>
+            <field name="model">season.crop</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="crop_id"/>
+                    <field name="crop_ids" invisible="1"/>
+                    <field name="plantation_area"/>
+                    <field name="land_measure"/>
+                    <field name="plantation_date"/>
+                </tree>
+            </field>
+        </record>
+        <record id="season_crop_kanban_view" model="ir.ui.view">
+            <field name="name">season.crop.kanban.view</field>
+            <field name="model">season.crop</field>
+            <field name="arch" type="xml">
+                <kanban string="Kanban" class="o_res_partner_kanban">
+                    <field name="id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click"
+                                 style="height:auto;background-color:#6CC1ED,color:#006600">
+                                <ul style="list-style-type:none;">
+                                    <li>
+                                        <strong>Crop:</strong>
+                                        <field name="crop_id"/>
+                                    </li>
+                                    <li>
+                                        <strong>Plantation Area:</strong>
+                                        <field name="plantation_area"/>
+                                    </li>
+                                    <li>
+                                        <strong>Land Measure Unit:</strong>
+                                        <field name="land_measure"/>
+                                    </li>
+                                    <li>
+                                        <strong>Plantation Date:</strong>
+                                        <field name="plantation_date"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="season_crop_search_view" model="ir.ui.view">
+            <field name="name">season.crop.search.view</field>
+            <field name="model">season.crop</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="crop_id"/>
+                    <field name="plantation_area"/>
+                    <field name="land_measure"/>
+                    <group string="Group By">
+                        <filter name="crop_id" string="Crop"
+                                context="{'group_by': 'crop_id'}"/>
+                        <filter name="plantation_area" string="Plantation Area"
+                                context="{'group_by': 'plantation_area'}"/>
+                        <filter name="land_measure" string="Land Measure"
+                                context="{'group_by': 'land_measure'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_season_crop" model="ir.actions.act_window">
+            <field name="name">Crop Seasons</field>
+            <field name="res_model">season.crop</field>
+            <field name="view_mode">kanban,tree,form,search</field>
+        </record>
+    </data>
+</odoo>

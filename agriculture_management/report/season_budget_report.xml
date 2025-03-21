@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="season_budget_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="m">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <table class="table table-sm o_main_table table-borderless mt-4">
+                                <tr>
+                                    <td colspan="3"
+                                        style="text-align: center; background-color: #f5f5f5; padding: 2px; font-size: 25px;">
+                                        <strong>
+                                            Season Budget Report
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">Season name:
+                                        <span t-field="m.name"/>
+                                    </td>
+                                    <td style="padding: 2px;">Start Date:
+                                        <span t-field="m.start_date"/>
+                                    </td>
+                                    <td style="padding: 2px;">Agronomist:
+                                        <span t-field="m.agronomist_id"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">Financial Year:
+                                        <span t-field="m.financial_year_id"/>
+                                    </td>
+                                    <td style="padding: 2px;">End Date:
+                                        <span t-field="m.end_date"/>
+                                    </td>
+                                    <td style="padding: 2px;">Season Project:
+                                        <span t-field="m.agriculture_project_id"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">Farm:
+                                        <span t-field="m.farm_id"/>
+                                    </td>
+                                    <td style="padding: 2px;" rowspan="3">Crops:
+                                        <br/>
+                                        <span t-field="m.crop_ids"/>
+                                    </td>
+                                    <td style="padding: 2px;">Responsible:
+                                        <span t-field="m.responsible"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">Farmer Name:
+                                        <span t-field="m.farm_id.farmer_id"/>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table class="table table-sm o_main_table">
+                                <tr>
+                                    <td colspan="5"
+                                        style="text-align: center; background-color: #f5f5f5; padding: 2px; border: aliceblue;">
+                                        <strong>
+                                            Season Budget
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; padding: 2px; width: 40%;">
+                                        <strong>Budget Type</strong>
+                                    </td>
+                                    <td style="text-align: right; padding: 2px; width: 15%;">
+                                        <strong>Qty</strong>
+                                    </td>
+                                    <td style="text-align: left; padding: 2px; width: 15%;">
+                                        <strong>Unit</strong>
+                                    </td>
+                                    <td style="text-align: right; padding: 2px; width: 15%;">
+                                        <strong>Price</strong>
+                                    </td>
+                                    <td style="text-align: right; padding: 2px; width: 15%;">
+                                        <strong>Total Price</strong>
+                                    </td>
+                                </tr>
+
+                                <tr t-foreach="m.season_budget_ids" t-as="s">
+                                    <td style="text-align: left; padding: 2px; width: 40%;">
+                                        <span t-field="s.budget_type"/>
+                                    </td>
+                                    <td style="text-align: right; padding: 2px; width: 15%;">
+                                        <span t-field="s.qty"/>
+                                    </td>
+                                    <td style="text-align: left; padding: 2px; width: 15%;">
+                                        <span t-field="s.unit_id"/>
+                                    </td>
+                                    <td style="text-align: right; padding: 2px; width: 15%;">
+                                        <span t-field="s.price"/>
+                                    </td>
+                                    <td style="text-align: right; padding: 2px; width: 15%;">
+                                        <span t-field="s.total_price"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="padding: 2px; width: 85%;">
+                                    </td>
+                                    <td style="text-align: right; padding: 2px; width: 15%;">
+                                        Total:
+                                        <strong>
+                                            <span t-field="m.season_budget"/>
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+    <record id="report_action_season_budget_report" model="ir.actions.report">
+        <field name="name">Season Budget Report</field>
+        <field name="model">agriculture.season</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">agriculture_management.season_budget_report_template</field>
+        <field name="report_file">agriculture_management.season_budget_report_template</field>
+        <field name="binding_model_id" ref="model_agriculture_season"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

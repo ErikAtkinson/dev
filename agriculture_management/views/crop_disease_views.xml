@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="crop_disease_form_view" model="ir.ui.view">
+            <field name="name">crop.disease.form.view</field>
+            <field name="model">crop.disease</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="row">
+                            <div class="col-6">
+                                <group>
+                                    <field name="name" placeholder="e.g. Crop Disease."/>
+                                    <field name="crop_ids" widget="many2many_tags" required="1"
+                                           options="{'no_create':True,'no_create_edit':True,'color_field': 'color'}"/>
+                                </group>
+                            </div>
+                            <div class="col-6 text-center">
+                                <field name="avatar" nolabel="1" widget="image"
+                                       options='{"size": [400, 400]}' class="bg-view"/>
+                            </div>
+                        </div>
+                        <notebook>
+                            <page name="samples" string="Samples">
+                                <field name="sample_ids">
+                                    <form>
+                                        <sheet>
+                                            <div class="oe_title float-left">
+                                                <label for="name"/>
+                                                <h1>
+                                                    <field name="name" placeholder="e.g. Crop Disease.." required="1"/>
+                                                </h1>
+                                            </div>
+                                            <div style="width: 40%; height: 40%;" class="float-right">
+                                                <field name="avatar" style="width: 40%; height: 40%;"
+                                                       class="img-thumbnail float-right" widget="image" required="1"/>
+                                            </div>
+                                        </sheet>
+                                    </form>
+                                    <kanban string="Kanban" class="">
+                                        <field name="id"/>
+                                        <field name="name"/>
+                                        <field name="avatar"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div class="card oe_kanban_global_click p-0 border-0">
+                                                    <div class="row">
+                                                        <div class="col-8">
+                                                            <strong>
+                                                                <field name="name"/>
+                                                            </strong>
+                                                        </div>
+                                                        <div class="col-4 text-end">
+                                                            <!-- below 100 Kb: good -->
+                                                            <t t-if="record.avatar.raw_value.length &lt; 100*1000">
+                                                                <t t-set="size_status" t-value="'text-bg-success'"/>
+                                                                <t t-set="message">Acceptable file size</t>
+                                                            </t>
+                                                            <!-- below 1000 Kb: decent -->
+                                                            <t t-elif="record.avatar.raw_value.length &lt; 1000*1000">
+                                                                <t t-set="size_status" t-value="'text-bg-warning'"/>
+                                                                <t t-set="message">Huge file size. The image
+                                                                    should be optimized/reduced.
+                                                                </t>
+                                                            </t>
+                                                            <!-- above 1000 Kb: bad -->
+                                                            <t t-else="1">
+                                                                <t t-set="size_status" t-value="'text-bg-danger'"/>
+                                                                <t t-set="message">Optimization required! Reduce the
+                                                                    image size or increase your compression settings.
+                                                                </t>
+                                                            </t>
+                                                            <span t-attf-class="badge #{size_status} o_product_image_size"
+                                                                  t-esc="record.avatar.value" t-att-title="message"/>
+                                                        </div>
+                                                    </div>
+                                                    <hr class="mb-1 mt-1"/>
+                                                    <div class="o_squared_image">
+                                                        <img class="card-img-top"
+                                                             style="height:223px;object-fit: cover;"
+                                                             t-att-src="kanban_image('crop.disease.sample', 'avatar', record.id.raw_value)"
+                                                             t-att-alt="record.name.value"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </page>
+                            <page name="treatments" string="Treatments">
+                                <field name="treatments"/>
+                            </page>
+                            <page name="prescription" string="Prescriptions">
+                                <field name="prescription"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="crop_disease_tree_view" model="ir.ui.view">
+            <field name="name">crop.disease.tree.view</field>
+            <field name="model">crop.disease</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="crop_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                </tree>
+            </field>
+        </record>
+        <record id="crop_disease_kanban_view" model="ir.ui.view">
+            <field name="name">crop.disease.kanban.view</field>
+            <field name="model">crop.disease</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="avatar"/>
+                    <field name="crop_ids"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                                <t t-if="record.avatar.raw_value">
+                                    <div class="o_kanban_image_fill_left d-none d-md-block">
+                                        <img t-att-src="kanban_image('crop.disease', 'avatar', record.id.raw_value)"
+                                             t-att-alt="name" style="margin: 0px;" width="96px" height="96px"
+                                             class="img img-responsive"/>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="o_kanban_image_fill_left d-none d-md-block"
+                                         t-attf-style="background-image: url('/agriculture_management/static/src/img/disease.png')">
+                                    </div>
+                                </t>
+                                <div class="oe_kanban_details" style="margin-left: 15px;">
+                                    <strong>
+                                        <field name="name"/>
+                                    </strong>
+                                    <br/>
+                                    <field name="crop_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="crop_disease_search_view" model="ir.ui.view">
+            <field name="name">crop.disease.search.view</field>
+            <field name="model">crop.disease</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <group string="Group By">
+                        <filter name="crop_ids" string="Crops"
+                                context="{'group_by': 'crop_ids'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_crop_disease" model="ir.actions.act_window">
+            <field name="name">Crop Diseases</field>
+            <field name="res_model">crop.disease</field>
+            <field name="view_mode">kanban,tree,form,activity,search</field>
+        </record>
+    </data>
+</odoo>

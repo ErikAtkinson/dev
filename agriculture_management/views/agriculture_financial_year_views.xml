@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="agriculture_financial_year_form_view" model="ir.ui.view">
+            <field name="name">agriculture.financial.year.form.view</field>
+            <field name="model">agriculture.financial.year</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title float-left">
+                            <label for="title"/>
+                            <h1>
+                                <field name="title" placeholder="e.g. Year 2020-21" required="1"/>
+                            </h1>
+                        </div>
+                        <div style="width: 40%; height: 40%;" class="float-right">
+                            <field name="avatar" style="width: 40%; height: 40%;"
+                                   class="img-thumbnail float-right" widget="image" invisible="1"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="agriculture_financial_year_tree_view" model="ir.ui.view">
+            <field name="name">agriculture.financial.year.tree.view</field>
+            <field name="model">agriculture.financial.year</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="title"/>
+                </tree>
+            </field>
+        </record>
+        <record id="agriculture_financial_year_kanban_view" model="ir.ui.view">
+            <field name="name">agriculture.financial.year.kanban.view</field>
+            <field name="model">agriculture.financial.year</field>
+            <field name="arch" type="xml">
+                <kanban string="Kanban" class="o_res_partner_kanban">
+                    <field name="id"/>
+                    <field name="avatar"/>
+                    <field name="title"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                                <t t-if="record.avatar.raw_value">
+                                    <div class="o_kanban_image_fill_left d-none d-md-block"
+                                         t-attf-style="background-image: url(#{kanban_image('agriculture.financial.year', 'avatar',record.id.raw_value)}})">
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="o_kanban_image_fill_left d-none d-md-block"
+                                         t-attf-style="background-image: url('/agriculture_management/static/src/img/financial.png')">
+                                    </div>
+                                </t>
+                                <div class="oe_kanban_details">
+                                    <strong>
+                                        <field name="title"/>
+                                    </strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="agriculture_financial_year_search_view" model="ir.ui.view">
+            <field name="name">agriculture.financial.year.search.view</field>
+            <field name="model">agriculture.financial.year</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="title"/>
+                </search>
+            </field>
+        </record>
+        <record id="action_agriculture_financial_year" model="ir.actions.act_window">
+            <field name="name">Financial Years</field>
+            <field name="res_model">agriculture.financial.year</field>
+            <field name="view_mode">kanban,tree,form,search</field>
+        </record>
+    </data>
+</odoo>

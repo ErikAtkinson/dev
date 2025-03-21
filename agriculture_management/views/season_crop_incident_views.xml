@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="season_crop_incident_form_view" model="ir.ui.view">
+            <field name="name">season.crop.incident.form.view</field>
+            <field name="model">season.crop.incident</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="crop_incident_id"/>
+                            <h1>
+                                <field name="crop_incident_id" placeholder="e.g. Crop Incident..."
+                                       options="{'no_create':True,'no_create_edit':True}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="farm_season_id" options="{'no_create':True,'no_create_edit':True}"/>
+                                <field name="crop_id" options="{'no_create':True,'no_create_edit':True}"/>
+                                <field name="crop_ids" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="date" required="1"/>
+                                <field name="value" string="Estimated Damage Value"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                        </group>
+                        <hr/>
+                        <h6>
+                            Incident Details
+                        </h6>
+                        <field name="description" placeholder="Descriptions..."/>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="season_crop_incident_tree_view" model="ir.ui.view">
+            <field name="name">season.crop.incident.tree.view</field>
+            <field name="model">season.crop.incident</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="crop_incident_id"/>
+                    <field name="crop_id"/>
+                    <field name="crop_ids" invisible="1"/>
+                    <field name="farm_season_id"/>
+                    <field name="date"/>
+                    <field name="value" string="Estimated Damage Values" sum="Total Value"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="season_crop_incident_search_view" model="ir.ui.view">
+            <field name="name">season.crop.incident.search.view</field>
+            <field name="model">season.crop.incident</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="crop_incident_id"/>
+                    <group string="Group By">
+                        <filter name="crop_incident_id" string="Crop Incidents"
+                                context="{'group_by': 'crop_incident_id'}"/>
+                        <filter name="crop_id" string="Crops"
+                                context="{'group_by': 'crop_id'}"/>
+                        <filter name="farm_season_id" string="Farm Seasons"
+                                context="{'group_by': 'farm_season_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_season_crop_incident" model="ir.actions.act_window">
+            <field name="name">Incidents</field>
+            <field name="res_model">season.crop.incident</field>
+            <field name="view_mode">tree,form,search,activity</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="template_field_visit_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="visit">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <table class="table table-sm o_main_table table-borderless mt-4">
+                                <tr>
+                                    <td colspan="2"
+                                        style="font-size: 12px; background-color: #F8F8F8; padding: 2px; text-align: center;">
+                                        <h3>
+                                            Field Visit Report
+                                        </h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">
+                                        <strong>Farm:</strong>
+                                        <span t-field="visit.farm_season_id.farm_id"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Date of Visit:</strong>
+                                        <span t-field="visit.date_of_visit"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">
+                                        <strong>Crop Season:</strong>
+                                        <span t-field="visit.farm_season_id"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Visiting Officer:</strong>
+                                        <span t-field="visit.officer_id"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">
+                                        <strong>Crop:</strong>
+                                        <span t-field="visit.crop_id"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Agronomist:</strong>
+                                        <span t-field="visit.farm_season_id.agronomist_id"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">
+                                        <strong>Instruction Type:</strong>
+                                        <span t-field="visit.instruction_type"/>
+                                    </td>
+                                    <td style="padding: 2px;">
+                                        <strong>Phone:</strong>
+                                        <span t-field="visit.farm_season_id.agronomist_id.phone"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table class="table table-bordered" style="width: 100%; margin-top: 0px;">
+                                <tr>
+                                    <td style="text-align: center; font-size: 12px; background-color: #F8F8F8;"
+                                        colspan="100%">
+                                        <strong>Field Visit Images</strong>
+                                    </td>
+                                </tr>
+                                <t t-set="ap_tag" t-value="str('&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;')"/>
+                                <t t-set="img_count" t-value="0"/>
+                                <tr>
+                                    <td>
+                                        <t t-foreach="visit.crop_images_ids" t-as="img">
+                                            <t t-set="img_count" t-value="img_count + 1"/>
+                                            <div style="display: inline-block;text-align:center;">
+                                                <t t-if="img.avatar">
+                                                    <img t-att-src="image_data_uri(img.avatar)"
+                                                         style="width: 260px; height: 220px; margin-left: 10px; margin-top: 10px; margin-bottom: 10px;"/>
+                                                </t>
+                                                <h6>
+                                                    <span t-field="img.name"/>
+                                                </h6>
+                                            </div>
+                                            <t t-if="img_count % 3 == 0">
+                                                <t t-raw="ap_tag"/>
+                                            </t>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-sm o_main_table table-borderless mt-4">
+                                <tr>
+                                    <td style="font-size: 12px; background-color: #F8F8F8; padding: 2px;">
+                                        <strong>➤&#160; Current Status of Crop</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">
+                                        <span t-field="visit.current_status_of_crop"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 12px; background-color: #F8F8F8; padding: 2px;">
+                                        <strong>➤&#160; Instructions</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 2px;">
+                                        <span t-field="visit.instructions"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+    <record id="action_field_visit_report" model="ir.actions.report">
+        <field name="name">Field Visit Report</field>
+        <field name="model">field.visit</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">agriculture_management.template_field_visit_report</field>
+        <field name="report_file">agriculture_management.template_field_visit_report</field>
+        <field name="binding_model_id" ref="model_field_visit"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

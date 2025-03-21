@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="pesticide_consume_order_form_view" model="ir.ui.view">
+            <field name="name">pesticide.consume.order.form.view</field>
+            <field name="model">pesticide.consume.order</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="warehouse_id" required="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="farm_crop_pesticides" string="Farm Crop Pesticides">
+                            <field name="farm_crop_pesticide_ids" nolabel="1" readonly="1">
+                                <tree>
+                                    <field name="pesticide_id"/>
+                                    <field name="qty" sum="qty"/>
+                                    <field name="unit_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button string="Create Consume Orders" name="action_create_consume_order" type="object"
+                                class="oe_highlight"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_crop_pesticide_consume_order" model="ir.actions.act_window">
+            <field name="name">Pesticide Consume Order</field>
+            <field name="res_model">pesticide.consume.order</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="pesticide_consume_order_form_view"/>
+        </record>
+    </data>
+</odoo>

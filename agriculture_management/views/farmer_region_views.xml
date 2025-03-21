@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="farmer_region_tree_view" model="ir.ui.view">
+            <field name="name">farmer.region.tree.view</field>
+            <field name="model">farmer.region</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name" required="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_farmer_region" model="ir.actions.act_window">
+            <field name="name">Farmer Region</field>
+            <field name="res_model">farmer.region</field>
+            <field name="view_mode">tree</field>
+        </record>
+    </data>
+</odoo>

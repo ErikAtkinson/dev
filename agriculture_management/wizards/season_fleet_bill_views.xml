@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="season_fleet_bill_form_view" model="ir.ui.view">
+            <field name="name">season.fleet.bill.form.view</field>
+            <field name="model">season.fleet.bill</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="vendor_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="season_fleets" string="Season Fleets">
+                            <field name="season_fleet_ids" nolabel="1" readonly="1">
+                                <tree>
+                                    <field name="fleet_id"/>
+                                    <field name="fuel" sum="Fuel Used"/>
+                                    <field name="price" sum="Price"/>
+                                    <field name="total_price" sum="Total"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button string="Create Bills" name="action_season_fleet_bill" type="object"
+                                class="oe_highlight"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_season_fleet_bill" model="ir.actions.act_window">
+            <field name="name">Season Fleet Bill</field>
+            <field name="res_model">season.fleet.bill</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="season_fleet_bill_form_view"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="season_report_form_view" model="ir.ui.view">
+            <field name="name">season.report.form.view</field>
+            <field name="model">season.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="agriculture_season_id" options="{'no_create':True,'no_create_edit':True}"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Print Excel Report" name="print_excel_report" type="object"
+                                class="oe_highlight"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_season_report" model="ir.actions.act_window">
+            <field name="name">Season Report</field>
+            <field name="res_model">season.report</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="season_report_form_view"/>
+        </record>
+    </data>
+</odoo>

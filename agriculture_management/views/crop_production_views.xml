@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="crop_production_form_view" model="ir.ui.view">
+            <field name="name">crop.production.form.view</field>
+            <field name="model">crop.production</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="stages" widget="statusbar"/>
+                        <button string="Update Stock in Inventory" name="action_update_stock" type="object"
+                                class="oe_highlight" attrs="{'invisible': [('stages', '!=', 'draft_stock')]}"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="crop_id"/>
+                            <h1>
+                                <field name="crop_id" placeholder="e.g. Product Name"
+                                       options="{'no_create':True,'no_create_edit':True}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Crop Production">
+                                <field name="crop_ids" invisible="1"/>
+                                <field name="farm_season_id" readonly="1"/>
+                                <field name="product"/>
+                                <field name="description"/>
+                            </group>
+                            <group string="Location Details">
+                                <field name="date" required="1"/>
+                                <field name="agriculture_warehouse_id"
+                                       options="{'no_create':True,'no_create_edit':True}"/>
+                            </group>
+                            <group string="Production Qty Details">
+                                <field name="qty"/>
+                                <label for="qty_on_hand" string="Qty on Hand"/>
+                                <div class="address_format">
+                                    <field name="qty_on_hand" style="width: 35%"/>
+                                    <strong>&#160;&#160;Unit&#160;&#160;</strong>
+                                    <field name="unit_id" style="width: 35%"/>
+                                </div>
+                            </group>
+                            <group string="Estimated Values">
+                                <field name="price"/>
+                                <field name="total_production_price"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="crop_production_tree_view" model="ir.ui.view">
+            <field name="name">crop.production.tree.view</field>
+            <field name="model">crop.production</field>
+            <field name="arch" type="xml">
+                <tree create="false" edit="false">
+                    <field name="farm_season_id"/>
+                    <field name="product" widget="many2one_button"/>
+                    <field name="crop_id"/>
+                    <field name="crop_ids" invisible="1"/>
+                    <field name="date"/>
+                    <field name="agriculture_warehouse_id"/>
+                    <field name="qty" sum="Qty"/>
+                    <field name="qty_on_hand" sum="On Hand"/>
+                    <field name="unit_id"/>
+                    <field name="price" sum="Price"/>
+                    <field name="total_production_price" sum="Total Income"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="stages" optional="show" widget="badge"
+                           decoration-info="stages == 'draft_stock'"
+                           decoration-success="stages == 'update_stock'"/>
+                    <button string="Update Stock in Inventory" name="action_update_stock" type="object"
+                            class="oe_highlight" attrs="{'invisible': [('stages', '!=', 'draft_stock')]}"/>
+                </tree>
+            </field>
+        </record>
+        <record id="crop_production_kanban_view" model="ir.ui.view">
+            <field name="name">crop.production.kanban.view</field>
+            <field name="model">crop.production</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="crop_id"/>
+                    <field name="qty"/>
+                    <field name="qty_on_hand" string="Qty on Hand"/>
+                    <field name="total_production_price"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings mt4">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="crop_id"/>
+                                        </strong>
+                                    </div>
+                                    <strong>
+                                        <field name="total_production_price"/>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </strong>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <strong>Qty:</strong>
+                                        <field name="qty"/>
+                                        <field name="unit_id"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <strong>Qty On Hand:</strong>
+                                        <field name="qty_on_hand"/>
+                                        <field name="unit_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="crop_production_search_view" model="ir.ui.view">
+            <field name="name">crop.production.search.view</field>
+            <field name="model">crop.production</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="crop_id"/>
+                    <group string="Group By">
+                        <filter name="crop_id" string="Crop"
+                                context="{'group_by': 'crop_id'}"/>
+                        <filter name="agriculture_warehouse_id" string="Warehouse"
+                                context="{'group_by': 'agriculture_warehouse_id'}"/>
+                        <filter name="stages" string="Status"
+                                context="{'group_by': 'stages'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_crop_production" model="ir.actions.act_window">
+            <field name="name">Crops Production</field>
+            <field name="res_model">crop.production</field>
+            <field name="view_mode">tree,kanban</field>
+        </record>
+    </data>
+</odoo>

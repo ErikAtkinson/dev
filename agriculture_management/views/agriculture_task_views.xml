@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="agriculture_task_tree_view" model="ir.ui.view">
+            <field name="name">agriculture.task.tree.view</field>
+            <field name="model">agriculture.task</field>
+            <field name="arch" type="xml">
+                <tree create="false" edit="false">
+                    <field name="agriculture_season_id"/>
+                    <field name="title"/>
+                    <field name="crop_id"/>
+                    <field name="crop_ids" invisible="1"/>
+                    <field name="crop_phase" required="1"/>
+                    <field name="start_date"/>
+                    <field name="expected_end_date"/>
+                    <field name="user_id" widget="many2one_avatar_user"/>
+                    <field name="agriculture_task_id" readonly="1" force_save="1" widget="many2one_button"/>
+                    <field name="status" optional="show" widget="badge" string="Status"
+                           decoration-success="status == 'a_start'"
+                           decoration-warning="status == 'b_in_progress'"
+                           decoration-info="status == 'c_complete'"/>
+                </tree>
+            </field>
+        </record>
+        <record id="agriculture_task_search_view" model="ir.ui.view">
+            <field name="name">agriculture.task.search.view</field>
+            <field name="model">agriculture.task</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="title"/>
+                    <group string="Group By">
+                        <filter name="crop_id" string="Agriculture Crop"
+                                context="{'group_by': 'crop_id'}"/>
+                        <filter name="agriculture_season_id" string="Agriculture Seasons"
+                                context="{'group_by': 'agriculture_season_id'}"/>
+                        <filter name="user_id" string="Assign To"
+                                context="{'group_by': 'user_id'}"/>
+                        <filter name="crop_phase" string="Crop Phase"
+                                context="{'group_by': 'crop_phase'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_agriculture_task" model="ir.actions.act_window">
+            <field name="name">Agriculture Task</field>
+            <field name="res_model">agriculture.task</field>
+            <field name="view_mode">tree,search</field>
+        </record>
+    </data>
+</odoo>

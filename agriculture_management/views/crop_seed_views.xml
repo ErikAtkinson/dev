@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="crop_seed_form_view" model="ir.ui.view">
+            <field name="name">crop.seed.form.view</field>
+            <field name="model">crop.seed</field>
+            <field name="arch" type="xml">
+                <form>
+                
+                    <sheet>
+                        <field name="image_1920" widget="image" class="oe_avatar" nolabel="1"/>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="e.g. Vegetable Crops - Tomatoes.."/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="product_id" attrs="{'readonly': [('id', '!=', False)]}"
+                                       required="0"/>
+                            </group>
+                            <group>
+                                <label for="pkg_qty" string="Package Qty"/>
+                                <div class="address_format">
+                                    <field name="pkg_qty" style="width: 25%"/>
+                                    <strong>&#160;&#160;Package Size&#160;&#160;</strong>
+                                    <field name="uom_id" style="width: 30%"
+                                           options="{'no_create':True,'no_create_edit':True}"/>
+                                </div>
+                                <field name="standard_price" widget='monetary'
+                                       options="{'currency_field': 'currency_id'}"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="description" string="Description">
+                                <field name="description"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="crop_seed_tree_view" model="ir.ui.view">
+            <field name="name">crop.seed.tree.view</field>
+            <field name="model">crop.seed</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="pkg_qty" sum="Qty"/>
+                    <field name="uom_id"/>
+                    <field name="standard_price" widget='monetary'
+                           options="{'currency_field': 'currency_id'}"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="crop_seed_kanban_view" model="ir.ui.view">
+            <field name="name">crop.seed.kanban.view</field>
+            <field name="model">crop.seed</field>
+            <field name="arch" type="xml">
+                <kanban string="Kanban">
+                    <field name="id"/>
+                    <field name="image_1920"/>
+                    <field name="name"/>
+                    <field name="pkg_qty"/>
+                    <field name="uom_id"/>
+                    <field name="standard_price"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                                <t t-if="record.image_1920.raw_value">
+                                    <div class="o_kanban_image_fill_left d-none d-md-block">
+                                        <img t-att-src="kanban_image('crop.seed', 'image_1920', record.id.raw_value)"
+                                             t-att-alt="name" style="margin: 0px;" width="96px" height="96px"
+                                             class="img img-responsive"/>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="o_kanban_image_fill_left d-none d-md-block"
+                                         t-attf-style="background-image: url('/agriculture_management/static/src/img/seed.png')">
+                                    </div>
+                                </t>
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top mb-0">
+                                        <div class="o_kanban_record_headings">
+                                            <strong>
+                                                <field name="name"/>
+                                            </strong>
+                                        </div>
+                                        <strong>
+                                            <field name="standard_price" widget='monetary'
+                                                   options="{'currency_field': 'currency_id'}"/>
+                                            <field name="company_id" invisible="1"/>
+                                            <field name="currency_id" invisible="1"/>
+                                        </strong>
+                                    </div>
+                                    <span>Pkg Qty:</span>
+                                    <field name="pkg_qty"/>
+                                    <field name="uom_id"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="crop_seed_search_view" model="ir.ui.view">
+            <field name="name">crop.seed.search.view</field>
+            <field name="model">crop.seed</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+        <record id="action_crop_seed" model="ir.actions.act_window">
+            <field name="name">Crop Seeds</field>
+            <field name="res_model">crop.seed</field>
+            <field name="view_mode">kanban,tree,form,activity,search</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,183 @@
+$dashboard-bg : #ffffff !default;
+
+.o_action_manager {
+    overflow: auto !important;
+}
+.agriculture_dashboard {
+    background: $dashboard-bg !important;
+    .tk-charts {
+      width: 100%;
+      height: 50vh;
+    }
+    .tk-os-chart {
+      width: 100%;
+      height: 50vh;
+    }
+
+    background: $dashboard-bg !important;
+    .p-32 {
+        padding: 32px!important;
+    }
+    .purple-bg {
+        background-color: #ecf2ff !important;
+        color: #5d87ff !important;
+    }
+    .warn-bg {
+        background-color: #fef5e5 !important;
+        color: #ffae1f !important;
+    }
+    .info-bg {
+        background-color: #e8f7ff !important;
+        color: #4abeff !important;
+    }
+    .danger-bg {
+        background-color: #fdede8 !important;
+        color: #fa896a !important;
+    }
+    .success-bg {
+        background-color: #e6fffa !important;
+        color: #17deba !important;
+    }
+    .active-bg {
+        background-color: #d6ffe9 !important;
+        color: #04c27a !important;
+    }
+    .terminate-bg {
+        background-color: #ffe9eb !important;
+        color: #fd4755 !important;
+    }
+    .all-bg {
+        background-color: #d7f2ff !important;
+        color: #2c9ee6 !important;
+    }
+    .tk-primary {
+        color: #2b3547 !important;
+        font-family: inherit;
+    }
+
+    .border-primary {
+        color: #8eafcf !important;
+    }
+    .card {
+        border: 0 !important;
+        .tk-card-body {
+            text-align: center;
+            .tk-st-1 {
+                margin-top: 8px;
+                font-size: 15px;
+            }
+             .tk-st-2 {
+                font-weight: 500;
+                font-size: 19px;
+            }
+            .tk-st-3 {
+                font-weight: 500;
+                font-size: 16px;
+            }
+        }
+    }
+    .card:hover {
+        transform: translateY(-5px) scale(1.005) translateZ(0);
+        box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11), 0 24px 46px transparent;
+        cursor: pointer;
+    }
+}
+
+.o_kanban_agriculture_timeline{
+  .o_kanban_record {
+    width: 100% !important;
+  }
+
+  .timeline {
+    list-style-type: none;
+    display: flex;
+    width: 79rem !important;
+    margin-top: 0.6rem;
+  }
+
+  .li {
+    transition: all 200ms ease-in;
+  }
+
+  .timestamp {
+    margin-bottom: 20px;
+    padding: 0px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 100;
+  }
+
+  .status {
+    padding: 0px 25px;
+    display: flex;
+    justify-content: center;
+    border-top: 2px solid #D6DCE0;
+    position: relative;
+    transition: all 200ms ease-in;
+  }
+
+  .status h4 {
+    font-weight: 600;
+    font-size: 1rem !important;
+    margin-top: 1.4rem;
+  }
+
+  .status:before {
+    content: "";
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    position: absolute;
+    top: -15px;
+    left: 42%;
+    transition: all 200ms ease-in;
+  }
+
+  .li.complete .status {
+    border-top: 2px solid #66DC71;
+  }
+
+  .li.complete .status:before {
+    background-color: #66DC71;
+    border: none;
+    transition: all 200ms ease-in;
+  }
+
+  .li.complete .status h4 {
+    color: #66DC71;
+  }
+
+  @media (min-device-width: 320px) and (max-device-width: 700px) {
+    .timeline {
+      list-style-type: none;
+      display: none;
+    }
+
+    .li {
+      transition: all 200ms ease-in;
+      display: flex;
+      width: inherit;
+    }
+
+    .timestamp {
+      width: 100px;
+    }
+
+    .status:before {
+      left: -8%;
+      top: 30%;
+      transition: all 200ms ease-in;
+    }
+  }
+
+
+    width: 100%;
+    height: 100%;
+    font-family: "Titillium Web", sans serif;
+    color: #758D96;
+        align-items: center;
+    justify-content: center;
+}

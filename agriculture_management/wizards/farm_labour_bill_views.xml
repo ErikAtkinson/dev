@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="farm_labour_bill_form_view" model="ir.ui.view">
+            <field name="name">farm.labour.bill.form.view</field>
+            <field name="model">farm.labour.bill</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="vendor_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="farm_labour_details" string="Farm Labour Details">
+                            <field name="farm_labour_ids" nolabel="1" readonly="1">
+                                <tree>
+                                    <field name="worker_id"/>
+                                    <field name="labour_work_type"/>
+                                    <field name="work_date"/>
+                                    <field name="total_hour" sum="Hours"/>
+                                    <field name="rate_hour" sum="Rate Hours"/>
+                                    <field name="total_labour_cost" sum="Total Labour Cost"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button string="Create Bills" name="action_farm_labour_bill" type="object"
+                                class="oe_highlight"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_farm_labour_bill" model="ir.actions.act_window">
+            <field name="name">Farm Labour Bill</field>
+            <field name="res_model">farm.labour.bill</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="farm_labour_bill_form_view"/>
+        </record>
+    </data>
+</odoo>

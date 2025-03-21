@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="soil_analysis_indicator_form_view" model="ir.ui.view">
+            <field name="name">soil.analysis.indicator.form.view</field>
+            <field name="model">soil.analysis.indicator</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="soil_indicator_id"/>
+                            <h1>
+                                <field name="soil_indicator_id"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="type"/>
+                                <field name="ideal_value"/>
+                            </group>
+                            <group>
+                                <field name="actual_value"/>
+                                <field name="rate"/>
+                                <field name="soil_constraint"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="soil_analysis_indicator_tree_view" model="ir.ui.view">
+            <field name="name">soil.analysis.indicator.tree.view</field>
+            <field name="model">soil.analysis.indicator</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="soil_indicator_id"/>
+                    <field name="type"/>
+                    <field name="ideal_value"/>
+                    <field name="actual_value"/>
+                    <field name="rate"/>
+                </tree>
+            </field>
+        </record>
+        <record id="soil_analysis_indicator_kanban_view" model="ir.ui.view">
+            <field name="name">soil.analysis.indicator.kanban.view</field>
+            <field name="model">soil.analysis.indicator</field>
+            <field name="arch" type="xml">
+                <kanban string="Kanban">
+                    <field name="id"/>
+                    <field name="soil_analysis_id"/>
+                    <field name="type"/>
+                    <field name="ideal_value"/>
+                    <field name="rate"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                                <div class="oe_kanban_details">
+                                    <strong>Indicator:</strong>
+                                    <field name="soil_indicator_id"/>
+                                    <br/>
+                                    <strong>Type:</strong>
+                                    <field name="type"/>
+                                    <br/>
+                                    <strong>Ideal Value:</strong>
+                                    <field name="ideal_value"/>
+                                    <br/>
+                                    <strong>Rate:</strong>
+                                    <field name="rate"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="soil_analysis_indicator_search_view" model="ir.ui.view">
+            <field name="name">soil.analysis.indicator.search.view</field>
+            <field name="model">soil.analysis.indicator</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="soil_analysis_id"/>
+                    <field name="type"/>
+                    <field name="soil_constraint"/>
+                    <group string="Group By">
+                        <filter name="soil_analysis_id" string="Soil Analysis"
+                                context="{'group_by':'soil_analysis_id'}"/>
+                        <filter name="type" string="Type"
+                                context="{'group_by':'type'}"/>
+                        <filter name="soil_constraint" string="Soil Constraint"
+                                context="{'group_by':'soil_constraint'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_soil_analysis_indicator" model="ir.actions.act_window">
+            <field name="name">Soil Analysis Indicators</field>
+            <field name="res_model">soil.analysis.indicator</field>
+            <field name="view_mode">kanban,tree,form,search</field>
+        </record>
+    </data>
+</odoo>

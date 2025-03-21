@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="water_indicator_form_view" model="ir.ui.view">
+            <field name="name">water.indicator.form.view</field>
+            <field name="model">water.indicator</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="parameter"/>
+                            <h1>
+                                <field name="parameter" placeholder="e.g. Chloride..."/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="type" widget="radio" options="{'horizontal': True}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="water_indicator_tree_view" model="ir.ui.view">
+            <field name="name">water.indicator.tree.view</field>
+            <field name="model">water.indicator</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="parameter"/>
+                    <field name="type"/>
+                </tree>
+            </field>
+        </record>
+        <record id="water_indicator_kanban_view" model="ir.ui.view">
+            <field name="name">water.indicator.kanban.view</field>
+            <field name="model">water.indicator</field>
+            <field name="arch" type="xml">
+                <kanban string="Kanban" class="o_res_partner_kanban">
+                    <field name="parameter"/>
+                    <field name="type"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top mb-0">
+                                        <div class="o_kanban_record_headings">
+                                            <strong>
+                                                <field name="parameter"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    Type:
+                                    <field name="type"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="water_indicator_search_view" model="ir.ui.view">
+            <field name="name">water.indicator.search.view</field>
+            <field name="model">water.indicator</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="parameter"/>
+                    <group string="Group By">
+                        <filter name="type" string="Indicator Type"
+                                context="{'group_by': 'type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_water_indicator" model="ir.actions.act_window">
+            <field name="name">Water Indicator</field>
+            <field name="res_model">water.indicator</field>
+            <field name="view_mode">kanban,tree,form,search</field>
+            <field name="context">{'search_default_type': 1}</field>
+        </record>
+    </data>
+</odoo>
